@@ -1,28 +1,28 @@
 {
-  "name": "flontend",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@types/node": "18.11.10",
-    "@types/react": "18.0.25",
-    "@types/react-dom": "18.0.9",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "eslint": "8.28.0",
-    "eslint-config-next": "13.0.6",
-    "eslint-config-prettier": "^8.5.0",
-    "next": "13.0.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "4.9.3"
-  },
-  "devDependencies": {
-    "prettier": "^2.8.0"
-  }
+    "name": "flontend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@types/node": "18.11.10",
+        "@types/react": "18.0.25",
+        "@types/react-dom": "18.0.9",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
+        "eslint": "8.28.0",
+        "eslint-config-next": "13.0.6",
+        "eslint-config-prettier": "^8.5.0",
+        "next": "13.0.6",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "typescript": "4.9.3"
+    },
+    "devDependencies": {
+        "prettier": "^2.8.0"
+    }
 }
