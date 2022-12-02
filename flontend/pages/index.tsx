@@ -1,6 +1,8 @@
 import Head from "next/head";
+import Location from "./Location";
 
 export default function Home() {
+    console.log("index render start");
     return (
         <div>
             <Head>
@@ -11,6 +13,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Location></Location>
         </div>
     );
 }
