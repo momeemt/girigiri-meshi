@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ShopCardList from "./ShopCardList";
+import ShopCardList from "../components/ShopCardList";
 
 export default function Home() {
     console.log("index render start");

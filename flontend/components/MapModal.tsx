@@ -37,7 +37,7 @@ const _MapModal: NextComponentType<
 
     const Map = useMemo(
         () =>
-            dynamic(() => import("./map"), {
+            dynamic(() => import("../components/map"), {
                 loading: () => <p>A map is loading</p>,
                 ssr: false,
             }),
