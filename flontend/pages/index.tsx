@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Location from "./Location";
+import ShopCardList from "./ShopCardList";
 
 export default function Home() {
     console.log("index render start");
@@ -13,7 +13,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Location></Location>
+            <ShopCardList></ShopCardList>
         </div>
     );
 }

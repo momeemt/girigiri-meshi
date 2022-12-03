@@ -1,9 +1,19 @@
 import React from "react";
-import { NextComponentType } from "next";
+import { NextComponentType, NextPageContext } from "next";
 
-const _ShopCard: NextComponentType = () => {
-    console.log("ShopCardList render start");
-    return <div></div>;
+import type { Shop } from "./ShopCardList";
+
+type ShopCardProps = {
+    shop: Shop;
+};
+
+const _ShopCard: NextComponentType<
+    NextPageContext,
+    Record<string, unknown>,
+    ShopCardProps
+> = (props: ShopCardProps) => {
+    console.log("ShopCard render start");
+    return <div>{props.shop.shopName}</div>;
 };
 
 const ShopCard = React.memo(_ShopCard);
