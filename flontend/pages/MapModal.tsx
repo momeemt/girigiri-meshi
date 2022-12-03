@@ -1,10 +1,9 @@
-import React from "react";
+import dynamic from "next/dynamic";
+import React, { useMemo } from "react";
 import { NextComponentType, NextPageContext } from "next";
 
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
-
-import Map from "./map";
 
 type MapModalProps = {
     handleMapClose: () => void;
@@ -32,6 +31,15 @@ const _MapModal: NextComponentType<
 
     const position: [number, number] = [51.505, -0.09];
     const zoom = 13;
+
+    const Map = useMemo(
+        () =>
+            dynamic(() => import("./map"), {
+                loading: () => <p>A map is loading</p>,
+                ssr: false,
+            }),
+        []
+    );
 
     return (
         <Modal
