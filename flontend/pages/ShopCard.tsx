@@ -11,11 +11,23 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import Modal from "@mui/material/Modal";
 
 import type { Shop } from "./ShopCardList";
 
 type ShopCardProps = {
     shop: Shop;
+};
+
+const mapModalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
 };
 
 const _ShopCard: NextComponentType<
@@ -24,6 +36,9 @@ const _ShopCard: NextComponentType<
     ShopCardProps
 > = (props: ShopCardProps) => {
     console.log("ShopCard render start");
+    const [isMapOpen, setIsMapOpen] = React.useState(false);
+    const handleMapOpen = () => setIsMapOpen(true);
+    const handleMapClose = () => setIsMapOpen(false);
 
     const MAX_STAR_QUANTITY = 5;
 
@@ -68,10 +83,36 @@ const _ShopCard: NextComponentType<
             </CardContent>
             <CardActions>
                 <Grid container justifyContent="center">
-                    <IconButton style={{ color: "#006699" }}>
+                    <IconButton
+                        style={{ color: "#006699" }}
+                        onClick={handleMapOpen}
+                    >
                         <FmdGoodIcon />
                         <Typography variant="body1">地図を表示</Typography>
                     </IconButton>
+                    <Modal
+                        open={isMapOpen}
+                        onClose={handleMapClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Card sx={mapModalStyle}>
+                            <Typography
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h2"
+                            >
+                                Text in a modal
+                            </Typography>
+                            <Typography
+                                id="modal-modal-description"
+                                sx={{ mt: 2 }}
+                            >
+                                Duis mollis, est non commodo luctus, nisi erat
+                                porttitor ligula.
+                            </Typography>
+                        </Card>
+                    </Modal>
                 </Grid>
             </CardActions>
         </Card>
