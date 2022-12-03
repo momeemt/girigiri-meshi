@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NextComponentType } from "next";
 
+import Grid from "@mui/material/Grid";
+
 import ShopCard from "./ShopCard";
 
 export type Shop = {
@@ -21,6 +23,41 @@ const dummyShopListFetch = (
             resolve([
                 {
                     shopName: "ゴリラやさん",
+                    shopImageURL:
+                        "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
+                    shopCloseTime: "22:00",
+                    starQuantity: 5,
+                },
+                {
+                    shopName: "ゴリラやさん1",
+                    shopImageURL:
+                        "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
+                    shopCloseTime: "22:00",
+                    starQuantity: 5,
+                },
+                {
+                    shopName: "ゴリラやさん2",
+                    shopImageURL:
+                        "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
+                    shopCloseTime: "22:00",
+                    starQuantity: 5,
+                },
+                {
+                    shopName: "ゴリラやさん3",
+                    shopImageURL:
+                        "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
+                    shopCloseTime: "22:00",
+                    starQuantity: 5,
+                },
+                {
+                    shopName: "ゴリラやさん4",
+                    shopImageURL:
+                        "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
+                    shopCloseTime: "22:00",
+                    starQuantity: 5,
+                },
+                {
+                    shopName: "ゴリラやさん5",
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
@@ -79,16 +116,21 @@ const _ShopCardList: NextComponentType = () => {
     }
 
     return (
-        <div>
+        <Grid container spacing={1}>
             {shopList.map((shop: Shop) => {
                 return (
-                    <ShopCard
+                    <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={4}
                         key={shop.shopName + shop.shopImageURL}
-                        shop={shop}
-                    />
+                    >
+                        <ShopCard shop={shop} />
+                    </Grid>
                 );
             })}
-        </div>
+        </Grid>
     );
 };
 
