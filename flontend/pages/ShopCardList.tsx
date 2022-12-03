@@ -33,35 +33,35 @@ const dummyShopListFetch = (
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
-                    starQuantity: 5,
+                    starQuantity: 4,
                 },
                 {
                     shopName: "ゴリラやさん2",
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
-                    starQuantity: 5,
+                    starQuantity: 3,
                 },
                 {
                     shopName: "ゴリラやさん3",
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
-                    starQuantity: 5,
+                    starQuantity: 2,
                 },
                 {
                     shopName: "ゴリラやさん4",
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
-                    starQuantity: 5,
+                    starQuantity: 1,
                 },
                 {
                     shopName: "ゴリラやさん5",
                     shopImageURL:
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
-                    starQuantity: 5,
+                    starQuantity: 0,
                 },
             ]);
         }, 1000);
@@ -124,6 +124,7 @@ const _ShopCardList: NextComponentType = () => {
                         xs={12}
                         sm={6}
                         md={4}
+                        lg={3}
                         key={shop.shopName + shop.shopImageURL}
                     >
                         <ShopCard shop={shop} />
