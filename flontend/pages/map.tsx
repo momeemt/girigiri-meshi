@@ -1,36 +1,40 @@
-import { useEffect } from "react";
+import { FC } from "react";
+
 import L from "leaflet";
-import * as ReactLeaflet from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-
-import styles from "./Map.module.css";
-
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-const { MapContainer } = ReactLeaflet;
+type MapProps = {
+    center: [number, number];
+    zoom: number;
+    style: React.CSSProperties;
+};
 
-const Map = ({ children, className, ...rest }) => {
-    let mapClassName = styles.map;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: iconRetinaUrl.src,
+    iconUrl: iconUrl.src,
+    shadowUrl: shadowUrl.src,
+});
 
-    if (className) {
-        mapClassName = `${mapClassName} ${className}`;
-    }
-
-    useEffect(() => {
-        (async function init() {
-            L.Icon.Default.mergeOptions({
-                iconRetinaUrl: iconRetinaUrl.src,
-                iconUrl: iconUrl.src,
-                shadowUrl: shadowUrl.src,
-            });
-        })();
-    }, []);
-
+const Map: FC<MapProps> = (props: MapProps) => {
     return (
-        <MapContainer className={mapClassName} {...rest}>
-            {children(ReactLeaflet)}
+        <MapContainer
+            center={props.center}
+            zoom={props.zoom}
+            style={props.style}
+        >
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={props.center}>
+                <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+            </Marker>
         </MapContainer>
     );
 };

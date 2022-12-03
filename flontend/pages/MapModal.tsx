@@ -3,6 +3,7 @@ import { NextComponentType, NextPageContext } from "next";
 
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
+
 import Map from "./map";
 
 type MapModalProps = {
@@ -29,7 +30,7 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
-    const position = [51.505, -0.09];
+    const position: [number, number] = [51.505, -0.09];
     const zoom = 13;
 
     return (
@@ -44,22 +45,7 @@ const _MapModal: NextComponentType<
                     style={{ height: "100%", width: "100%" }}
                     center={position}
                     zoom={zoom}
-                >
-                    {({ TileLayer, Marker, Popup }) => (
-                        <>
-                            <TileLayer
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            />
-                            <Marker position={position}>
-                                <Popup>
-                                    A pretty CSS3 popup. <br /> Easily
-                                    customizable.
-                                </Popup>
-                            </Marker>
-                        </>
-                    )}
-                </Map>
+                ></Map>
             </Card>
         </Modal>
     );
