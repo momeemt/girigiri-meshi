@@ -2,8 +2,8 @@ import React from "react";
 import { NextComponentType, NextPageContext } from "next";
 
 import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import Map from "./map";
 
 type MapModalProps = {
     handleMapClose: () => void;
@@ -15,7 +15,8 @@ const mapModalStyle = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 800,
+    height: 800,
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
@@ -28,6 +29,9 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
+    const position = [51.505, -0.09];
+    const zoom = 13;
+
     return (
         <Modal
             open={props.isMapOpen}
@@ -36,13 +40,26 @@ const _MapModal: NextComponentType<
             aria-describedby="modal-modal-description"
         >
             <Card sx={mapModalStyle}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor
-                    ligula.
-                </Typography>
+                <Map
+                    style={{ height: "100%", width: "100%" }}
+                    center={position}
+                    zoom={zoom}
+                >
+                    {({ TileLayer, Marker, Popup }) => (
+                        <>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={position}>
+                                <Popup>
+                                    A pretty CSS3 popup. <br /> Easily
+                                    customizable.
+                                </Popup>
+                            </Marker>
+                        </>
+                    )}
+                </Map>
             </Card>
         </Modal>
     );
