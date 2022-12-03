@@ -10,6 +10,7 @@ type MapModalProps = {
     isMapOpen: boolean;
     longitude: number;
     latitude: number;
+    description: string;
 };
 
 const mapModalStyle = {
@@ -50,6 +51,7 @@ const _MapModal: NextComponentType<
                     style={{ height: "100%", width: "100%" }}
                     center={position}
                     zoom={zoom}
+                    description={props.description}
                 ></Map>
             </Card>
         </Modal>

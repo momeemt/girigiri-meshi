@@ -11,6 +11,7 @@ type MapProps = {
     center: [number, number];
     zoom: number;
     style: React.CSSProperties;
+    description: string;
 };
 
 L.Icon.Default.mergeOptions({
@@ -31,9 +32,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker position={props.center}>
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
+                <Popup>{props.description}</Popup>
             </Marker>
         </MapContainer>
     );
