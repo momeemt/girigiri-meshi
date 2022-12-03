@@ -21,6 +21,8 @@ L.Icon.Default.mergeOptions({
 });
 
 const Map: FC<MapProps> = (props: MapProps) => {
+    console.log("Map render start");
+
     return (
         <MapContainer
             center={props.center}
