@@ -8,6 +8,8 @@ import Modal from "@mui/material/Modal";
 type MapModalProps = {
     handleMapClose: () => void;
     isMapOpen: boolean;
+    longitude: number;
+    latitude: number;
 };
 
 const mapModalStyle = {
@@ -29,8 +31,8 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
-    const position: [number, number] = [51.505, -0.09];
-    const zoom = 13;
+    const position: [number, number] = [props.latitude, props.longitude];
+    const zoom = 14;
 
     const Map = useMemo(
         () =>

@@ -82,6 +82,8 @@ const _ShopCard: NextComponentType<
                     <MapModal
                         isMapOpen={isMapOpen}
                         handleMapClose={handleMapClose}
+                        longitude={shop.longitude}
+                        latitude={shop.latitude}
                     ></MapModal>
                 </Grid>
             </CardActions>
