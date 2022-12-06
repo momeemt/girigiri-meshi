@@ -8,9 +8,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 import type { Shop } from "./ShopCardList";
 import MapModal from "./MapModal";
@@ -25,9 +22,6 @@ const _ShopCard: NextComponentType<
     ShopCardProps
 > = (props: ShopCardProps) => {
     console.log("ShopCard render start");
-    const [isMapOpen, setIsMapOpen] = React.useState(false);
-    const handleMapOpen = () => setIsMapOpen(true);
-    const handleMapClose = () => setIsMapOpen(false);
 
     const MAX_STAR_QUANTITY = 5;
 
@@ -71,22 +65,11 @@ const _ShopCard: NextComponentType<
                 </div>
             </CardContent>
             <CardActions>
-                <Grid container justifyContent="center">
-                    <IconButton
-                        style={{ color: "#006699" }}
-                        onClick={handleMapOpen}
-                    >
-                        <FmdGoodIcon />
-                        <Typography variant="body1">地図を表示</Typography>
-                    </IconButton>
-                    <MapModal
-                        isMapOpen={isMapOpen}
-                        handleMapClose={handleMapClose}
-                        longitude={shop.longitude}
-                        latitude={shop.latitude}
-                        description={shop.shopName}
-                    ></MapModal>
-                </Grid>
+                <MapModal
+                    longitude={shop.longitude}
+                    latitude={shop.latitude}
+                    description={shop.shopName}
+                ></MapModal>
             </CardActions>
         </Card>
     );
