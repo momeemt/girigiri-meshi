@@ -90,6 +90,7 @@ const _ShopCardList: NextComponentType = () => {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
+        console.log("get longitude and latitude");
         // get longitude and latitude
         let longitude = 0;
         let latitude = 0;
@@ -111,6 +112,7 @@ const _ShopCardList: NextComponentType = () => {
         // TODO: 本番用の関数に差し替え
         dummyShopListFetch(longitude, latitude).then(
             (result) => {
+                console.log("promise resolved");
                 setShopList(result);
                 setIsLoaded(true);
             }
@@ -119,7 +121,18 @@ const _ShopCardList: NextComponentType = () => {
             //     setError(error);
             // }
         );
+        console.log("get longitude and latitude end");
     }, []);
+
+    // shoplist changed
+    useEffect(() => {
+        console.log("shopList changed");
+    }, [shopList]);
+
+    // isLoaded changed
+    useEffect(() => {
+        console.log("isLoaded changed");
+    }, [isLoaded]);
 
     if (!isLoaded) {
         return <div>Loading...</div>;
