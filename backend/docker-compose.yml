@@ -1,0 +1,9 @@
+version: "3"
+services:
+  api:
+    container_name: 2000s_api
+    build: ./app
+    volumes:
+      - ./app:/app
+    ports:
+      - "8081:80"
