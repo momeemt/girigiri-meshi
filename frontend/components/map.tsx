@@ -7,11 +7,18 @@ import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
+import { Position } from "../model/Position";
+
 type MapProps = {
     center: [number, number];
     zoom: number;
     style: React.CSSProperties;
-    description: string;
+    shopPins: [
+        {
+            position: Position;
+            description: string;
+        }
+    ];
 };
 
 L.Icon.Default.mergeOptions({
@@ -33,9 +40,23 @@ const Map: FC<MapProps> = (props: MapProps) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={props.center}>
-                <Popup>{props.description}</Popup>
-            </Marker>
+            {props.shopPins.map((shopPin) => {
+                return (
+                    <Marker
+                        position={[
+                            shopPin.position.longitude,
+                            shopPin.position.latitude,
+                        ]}
+                        key={
+                            shopPin.description +
+                            shopPin.position.latitude +
+                            shopPin.position.longitude
+                        }
+                    >
+                        <Popup>{shopPin.description}</Popup>
+                    </Marker>
+                );
+            })}
         </MapContainer>
     );
 };

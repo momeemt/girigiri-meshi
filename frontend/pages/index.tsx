@@ -1,14 +1,17 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 
-import { GetPosition } from "../model/Position";
-import { Shops, FetchShops } from "../model/Shops";
+import { useSetRecoilState } from "recoil";
+
+import { PositionAtom, GetPosition } from "../model/Position";
+import { ShopsAtom, FetchShops } from "../model/Shops";
 import ShopCardList from "../components/ShopCardList";
 
 export default function Home() {
     console.log("index render start");
 
-    const [shopList, setShopList] = useState<Shops>([]);
+    const setUserPosition = useSetRecoilState(PositionAtom);
+    const setShops = useSetRecoilState(ShopsAtom);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
@@ -32,7 +35,8 @@ export default function Home() {
                 return;
             }
 
-            setShopList(shops);
+            setUserPosition(nowUserPosition);
+            setShops(shops);
             setIsLoaded(true);
         })();
     }, []);
@@ -55,7 +59,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ShopCardList shopList={shopList}></ShopCardList>
+            <ShopCardList></ShopCardList>
         </div>
     );
 }

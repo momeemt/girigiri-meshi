@@ -66,9 +66,12 @@ const _ShopCard: NextComponentType<
             </CardContent>
             <CardActions>
                 <MapModal
-                    longitude={shop.longitude}
-                    latitude={shop.latitude}
-                    description={shop.shopName}
+                    shopPins={[
+                        {
+                            position: shop.position,
+                            description: shop.shopName,
+                        },
+                    ]}
                 ></MapModal>
             </CardActions>
         </Card>

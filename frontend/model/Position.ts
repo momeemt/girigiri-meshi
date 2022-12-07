@@ -1,7 +1,14 @@
+import { atom } from "recoil";
+
 export type Position = {
     longitude: number;
     latitude: number;
 };
+
+export const PositionAtom = atom({
+    key: "position",
+    default: {} as Position,
+});
 
 export function GetPosition(): Promise<Position> {
     return new Promise((resolve, reject) => {

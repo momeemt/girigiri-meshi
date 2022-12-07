@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import { NextComponentType, NextPageContext } from "next";
 
+import { useRecoilValue } from "recoil";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
@@ -9,11 +10,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
-type MapModalProps = {
-    longitude: number;
-    latitude: number;
-    description: string;
-};
+import { Position, PositionAtom } from "../model/Position";
 
 const mapModalStyle = {
     position: "absolute",
@@ -27,6 +24,15 @@ const mapModalStyle = {
     p: 4,
 };
 
+type MapModalProps = {
+    shopPins: [
+        {
+            position: Position;
+            description: string;
+        }
+    ];
+};
+
 const _MapModal: NextComponentType<
     NextPageContext,
     Record<string, unknown>,
@@ -34,11 +40,11 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
+    const userPosition = useRecoilValue(PositionAtom);
     const [isMapOpen, setIsMapOpen] = React.useState(false);
     const handleMapOpen = () => setIsMapOpen(true);
     const handleMapClose = () => setIsMapOpen(false);
 
-    const position: [number, number] = [props.latitude, props.longitude];
     const zoom = 14;
 
     const Map = useMemo(
@@ -60,9 +66,9 @@ const _MapModal: NextComponentType<
                 <Card sx={mapModalStyle}>
                     <Map
                         style={{ height: "100%", width: "100%" }}
-                        center={position}
+                        center={[userPosition.longitude, userPosition.latitude]}
                         zoom={zoom}
-                        description={props.description}
+                        shopPins={props.shopPins}
                     ></Map>
                 </Card>
             </Modal>

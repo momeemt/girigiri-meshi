@@ -1,25 +1,19 @@
 import React from "react";
-import { NextComponentType, NextPageContext } from "next";
+import { NextComponentType } from "next";
 
+import { useRecoilValue } from "recoil";
 import Grid from "@mui/material/Grid";
 
-import { Shops, Shop } from "../model/Shops";
+import { Shop, ShopsAtom } from "../model/Shops";
 import ShopCard from "./ShopCard";
 
-type ShopCardListProps = {
-    shopList: Shops;
-};
-
-const _ShopCardList: NextComponentType<
-    NextPageContext,
-    Record<string, unknown>,
-    ShopCardListProps
-> = (props: ShopCardListProps) => {
+const _ShopCardList: NextComponentType = () => {
     console.log("ShopCardList render start");
+    const shops = useRecoilValue(ShopsAtom);
 
     return (
         <Grid container spacing={1}>
-            {props.shopList.map((shop: Shop) => {
+            {shops.map((shop: Shop) => {
                 return (
                     <Grid
                         item
