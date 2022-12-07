@@ -74,13 +74,4 @@ components:
           type: number
           format: double
           example: 3.7
-  requestBodies:
-    UserArray:
-      description: List of restaurant object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Restaurant'
               
