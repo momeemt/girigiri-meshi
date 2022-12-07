@@ -6,6 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { PositionAtom, GetUserPosition } from "../model/Position";
 import { ShopsAtom, FetchShops } from "../model/Shops";
 import ShopCardList from "../components/ShopCardList";
+import AllPinMapButton from "../components/AllPinMapButton";
 
 export default function Home() {
     console.log("index render start");
@@ -60,6 +61,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <ShopCardList></ShopCardList>
+            <AllPinMapButton></AllPinMapButton>
         </div>
     );
 }
