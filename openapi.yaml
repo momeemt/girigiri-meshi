@@ -4,8 +4,6 @@ info:
   description: |-
     ギリギリで駆け込める飯屋を探してギリギリで駆け込もう
   version: 0.1.0
-servers:
-  - url: https://madakimete.nai/
 tags:
   - name: restaurant
     description: Everything about nearby restaurants
