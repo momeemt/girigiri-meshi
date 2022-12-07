@@ -1,9 +1,9 @@
 import React from "react";
 import { NextComponentType, NextPageContext } from "next";
-import { Shops, Shop } from "../pages/index";
 
 import Grid from "@mui/material/Grid";
 
+import { Shops, Shop } from "../model/Shops";
 import ShopCard from "./ShopCard";
 
 type ShopCardListProps = {
