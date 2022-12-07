@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
-import { PositionAtom } from "../model/Position";
+import { Position, PositionAtom } from "../model/Position";
 import { Pin } from "../model/Pin";
 
 const mapModalStyle = {
@@ -25,12 +25,13 @@ export interface MapModalPinProps {
     shopPins: Pin[];
 }
 
-interface MapModalContorolProps {
+interface MapContorolProps {
+    center: Position;
     isMapOpen: boolean;
     onClose: () => void;
 }
 
-type MapModalProps = MapModalContorolProps & MapModalPinProps;
+type MapModalProps = MapContorolProps & MapModalPinProps;
 
 const _MapModal: NextComponentType<
     NextPageContext,
@@ -38,8 +39,6 @@ const _MapModal: NextComponentType<
     MapModalProps
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
-
-    const userPosition = useRecoilValue(PositionAtom);
 
     const zoom = 14;
 
@@ -57,7 +56,7 @@ const _MapModal: NextComponentType<
             <Card sx={mapModalStyle}>
                 <Map
                     style={{ height: "100%", width: "100%" }}
-                    center={userPosition}
+                    center={props.center}
                     zoom={zoom}
                     shopPins={props.shopPins}
                 ></Map>

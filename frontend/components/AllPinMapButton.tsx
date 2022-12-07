@@ -7,6 +7,7 @@ import MapIcon from "@mui/icons-material/Map";
 
 import MapModal from "./MapModal";
 import { ShopsAtom } from "../model/Shops";
+import { PositionAtom } from "../model/Position";
 
 const AllPinMapButtonStyle = {
     position: "fixed",
@@ -27,6 +28,7 @@ const _AllPinMapButton: NextComponentType = () => {
     const [isMapOpen, setIsMapOpen] = useState(false);
     const handleMapOpen = () => setIsMapOpen(true);
     const handleMapClose = () => setIsMapOpen(false);
+    const userPosition = useRecoilValue(PositionAtom);
 
     const shops = useRecoilValue(ShopsAtom);
     const shopPins = shops.map((shop) => {
@@ -50,6 +52,7 @@ const _AllPinMapButton: NextComponentType = () => {
                 isMapOpen={isMapOpen}
                 onClose={handleMapClose}
                 shopPins={shopPins}
+                center={userPosition}
             ></MapModal>
         </>
     );

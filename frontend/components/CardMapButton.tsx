@@ -31,6 +31,7 @@ const _CardMapButton: NextComponentType<
                 isMapOpen={isMapOpen}
                 onClose={handleMapClose}
                 shopPins={props.shopPins}
+                center={props.shopPins[0].position}
             ></MapModal>
         </Grid>
     );
