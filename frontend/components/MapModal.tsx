@@ -10,7 +10,8 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
-import { Position, PositionAtom } from "../model/Position";
+import { PositionAtom } from "../model/Position";
+import { Pin } from "../model/Pin";
 
 const mapModalStyle = {
     position: "absolute",
@@ -25,12 +26,7 @@ const mapModalStyle = {
 };
 
 type MapModalProps = {
-    shopPins: [
-        {
-            position: Position;
-            description: string;
-        }
-    ];
+    shopPins: Pin[];
 };
 
 const _MapModal: NextComponentType<

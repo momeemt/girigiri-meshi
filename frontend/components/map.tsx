@@ -7,18 +7,13 @@ import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-import { Position } from "../model/Position";
+import { Pin } from "../model/Pin";
 
 type MapProps = {
     center: [number, number];
     zoom: number;
     style: React.CSSProperties;
-    shopPins: [
-        {
-            position: Position;
-            description: string;
-        }
-    ];
+    shopPins: Pin[];
 };
 
 L.Icon.Default.mergeOptions({
