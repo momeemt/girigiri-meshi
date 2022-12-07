@@ -14,7 +14,7 @@ const _CardMapButton: NextComponentType<
     Record<string, unknown>,
     MapModalPinProps
 > = (props: MapModalPinProps) => {
-    console.log("MapModal render start");
+    console.log("CardMapButton render start");
 
     const [isMapOpen, setIsMapOpen] = useState(false);
     const handleMapOpen = () => setIsMapOpen(true);

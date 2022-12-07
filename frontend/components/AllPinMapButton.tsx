@@ -22,7 +22,7 @@ const AllPinMapButtonStyle = {
 };
 
 const _AllPinMapButton: NextComponentType = () => {
-    console.log("MapModal render start");
+    console.log("AllPinMapButton render start");
 
     const [isMapOpen, setIsMapOpen] = useState(false);
     const handleMapOpen = () => setIsMapOpen(true);
