@@ -3,10 +3,6 @@ import React, { useMemo } from "react";
 import { NextComponentType, NextPageContext } from "next";
 
 import { useRecoilValue } from "recoil";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
@@ -25,9 +21,14 @@ const mapModalStyle = {
     p: 4,
 };
 
-type MapModalProps = {
+export interface MapModalButtonProps {
     shopPins: Pin[];
-};
+}
+
+type MapModalProps = {
+    isMapOpen: boolean;
+    onClose: () => void;
+} & MapModalButtonProps;
 
 const _MapModal: NextComponentType<
     NextPageContext,
@@ -37,9 +38,6 @@ const _MapModal: NextComponentType<
     console.log("MapModal render start");
 
     const userPosition = useRecoilValue(PositionAtom);
-    const [isMapOpen, setIsMapOpen] = React.useState(false);
-    const handleMapOpen = () => setIsMapOpen(true);
-    const handleMapClose = () => setIsMapOpen(false);
 
     const zoom = 14;
 
@@ -53,22 +51,16 @@ const _MapModal: NextComponentType<
     );
 
     return (
-        <Grid container justifyContent="center">
-            <IconButton style={{ color: "#006699" }} onClick={handleMapOpen}>
-                <FmdGoodIcon />
-                <Typography variant="body1">地図を表示</Typography>
-            </IconButton>
-            <Modal open={isMapOpen} onClose={handleMapClose}>
-                <Card sx={mapModalStyle}>
-                    <Map
-                        style={{ height: "100%", width: "100%" }}
-                        center={userPosition}
-                        zoom={zoom}
-                        shopPins={props.shopPins}
-                    ></Map>
-                </Card>
-            </Modal>
-        </Grid>
+        <Modal open={props.isMapOpen} onClose={props.onClose}>
+            <Card sx={mapModalStyle}>
+                <Map
+                    style={{ height: "100%", width: "100%" }}
+                    center={userPosition}
+                    zoom={zoom}
+                    shopPins={props.shopPins}
+                ></Map>
+            </Card>
+        </Modal>
     );
 };
 

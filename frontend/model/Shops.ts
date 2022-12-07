@@ -27,10 +27,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 5,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
                 {
                     shopName: "ゴリラやさん1",
@@ -38,10 +35,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 4,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
                 {
                     shopName: "ゴリラやさん2",
@@ -49,10 +43,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 3,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
                 {
                     shopName: "ゴリラやさん3",
@@ -60,10 +51,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 2,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
                 {
                     shopName: "ゴリラやさん4",
@@ -71,10 +59,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 1,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
                 {
                     shopName: "ゴリラやさん5",
@@ -82,10 +67,7 @@ export function FetchShops(position: Position): Promise<Shops> {
                         "https://2.bp.blogspot.com/-ruMSXp-w-qk/XDXbUFVC3FI/AAAAAAABQ-8/QRyKKr--u9E1-Rvy2SQqt0QPWeq1ME6wgCLcBGAs/s800/animal_gorilla.png",
                     shopCloseTime: "22:00",
                     starQuantity: 0,
-                    position: {
-                        longitude: 137.1121831,
-                        latitude: 35.1830169,
-                    },
+                    position: [35.1830169, 137.1121831],
                 },
             ]);
         }, 1000);
