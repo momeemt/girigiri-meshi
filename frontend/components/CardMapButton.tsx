@@ -7,13 +7,13 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import Typography from "@mui/material/Typography";
 
 import MapModal from "./MapModal";
-import { MapModalButtonProps } from "./MapModal";
+import { MapModalPinProps } from "./MapModal";
 
 const _CardMapButton: NextComponentType<
     NextPageContext,
     Record<string, unknown>,
-    MapModalButtonProps
-> = (props: MapModalButtonProps) => {
+    MapModalPinProps
+> = (props: MapModalPinProps) => {
     console.log("MapModal render start");
 
     const [isMapOpen, setIsMapOpen] = useState(false);

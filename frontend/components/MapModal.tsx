@@ -21,14 +21,16 @@ const mapModalStyle = {
     p: 4,
 };
 
-export interface MapModalButtonProps {
+export interface MapModalPinProps {
     shopPins: Pin[];
 }
 
-type MapModalProps = {
+interface MapModalContorolProps {
     isMapOpen: boolean;
     onClose: () => void;
-} & MapModalButtonProps;
+}
+
+type MapModalProps = MapModalContorolProps & MapModalPinProps;
 
 const _MapModal: NextComponentType<
     NextPageContext,
