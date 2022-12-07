@@ -4,8 +4,6 @@ info:
   description: |-
     ギリギリで駆け込める飯屋を探してギリギリで駆け込もう
   version: 0.1.0
-servers:
-  - url: https://madakimete.nai/
 tags:
   - name: restaurant
     description: Everything about nearby restaurants
@@ -61,8 +59,6 @@ components:
         closeTime:
           type: string
           format: date-time
-          example: 2022-12-07T22:00.0000+09:00
-          description: Based on RFC 3339
         photoUrl:
           type: string
           example: https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -74,4 +70,13 @@ components:
           type: number
           format: double
           example: 3.7
+  requestBodies:
+    UserArray:
+      description: List of restaurant object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Restaurant'
               
