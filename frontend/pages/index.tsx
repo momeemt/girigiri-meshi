@@ -16,6 +16,7 @@ export default function Home() {
         (async () => {
             const nowUserPosition = await GetPosition().catch((error) => {
                 setError(error);
+                setIsLoaded(true);
                 return null;
             });
             if (nowUserPosition === null) {
@@ -24,6 +25,7 @@ export default function Home() {
 
             const shops = await FetchShops(nowUserPosition).catch((error) => {
                 setError(error);
+                setIsLoaded(true);
                 return null;
             });
             if (shops === null) {

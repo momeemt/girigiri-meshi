@@ -5,6 +5,9 @@ export type Position = {
 
 export function GetPosition(): Promise<Position> {
     return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject("Geolocation is not supported by your browser");
+        }
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 resolve({
@@ -13,7 +16,7 @@ export function GetPosition(): Promise<Position> {
                 });
             },
             (error) => {
-                reject(error);
+                reject(error.message);
             }
         );
     });
