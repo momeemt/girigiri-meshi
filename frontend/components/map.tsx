@@ -43,14 +43,11 @@ const Map: FC<MapProps> = (props: MapProps) => {
             {props.shopPins.map((shopPin) => {
                 return (
                     <Marker
-                        position={[
-                            shopPin.position.longitude,
-                            shopPin.position.latitude,
-                        ]}
+                        position={shopPin.position}
                         key={
                             shopPin.description +
-                            shopPin.position.latitude +
-                            shopPin.position.longitude
+                            shopPin.position[0] +
+                            shopPin.position[1]
                         }
                     >
                         <Popup>{shopPin.description}</Popup>

@@ -66,7 +66,7 @@ const _MapModal: NextComponentType<
                 <Card sx={mapModalStyle}>
                     <Map
                         style={{ height: "100%", width: "100%" }}
-                        center={[userPosition.longitude, userPosition.latitude]}
+                        center={userPosition}
                         zoom={zoom}
                         shopPins={props.shopPins}
                     ></Map>

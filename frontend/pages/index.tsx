@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import { useSetRecoilState } from "recoil";
 
-import { PositionAtom, GetPosition } from "../model/Position";
+import { PositionAtom, GetUserPosition } from "../model/Position";
 import { ShopsAtom, FetchShops } from "../model/Shops";
 import ShopCardList from "../components/ShopCardList";
 
@@ -17,7 +17,7 @@ export default function Home() {
 
     useEffect(() => {
         (async () => {
-            const nowUserPosition = await GetPosition().catch((error) => {
+            const nowUserPosition = await GetUserPosition().catch((error) => {
                 setError(error);
                 setIsLoaded(true);
                 return null;
