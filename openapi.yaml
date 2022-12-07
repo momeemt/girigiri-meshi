@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: GirigiriMeshi
+  description: |-
+    ギリギリで駆け込める飯屋を探してギリギリで駆け込もう
+  version: 0.1.0
+servers:
+  - url: https://madakimete.nai/
+tags:
+  - name: restaurant
+    description: Everything about nearby restaurants
+paths:
+  /restaurants:
+    post:
+      tags:
+        - restaurant
+      summary: Search for nearby restaurant
+      description: Get a list of nearby restaurants from location
+      operationId: getRestaurants
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Location'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Restaurant'
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Location:
+      type: object
+      properties:
+        latitude:
+          description: 緯度
+          type: number
+          format: double
+          example: 35.5827517
+        longtitude:
+          description: 経度
+          type: number
+          format: double
+          example: 140.1327256
+    Restaurant:
+      type: object
+      properties: 
+        name:
+          type: string
+          description: name of the restaurant
+          example: 鐵 蘇我本店
+        location:
+          $ref: '#/components/schemas/Location'
+        closeTime:
+          type: string
+          format: date-time
+          example: 2022-12-07T22:00.0000+09:00
+          description: Based on RFC 3339
+        photoUrl:
+          type: string
+          example: https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        place_id:
+          type: string
+          example: ChIJeSTaRQWbImARznMsCGVeYcw
+          description: This id is based on Google Places API
+        rating:
+          type: number
+          format: double
+          example: 3.7
+  requestBodies:
+    UserArray:
+      description: List of restaurant object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Restaurant'
+              
