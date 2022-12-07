@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-import type { Shop } from "./ShopCardList";
+import type { Shop } from "../pages/index";
 import MapModal from "./MapModal";
 
 type ShopCardProps = {
