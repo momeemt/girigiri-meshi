@@ -1,19 +1,15 @@
-package handleFuncs
+package handler
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/momeemt/2000s/domain/model"
 )
 
-// Messageは実際にクライアントに返信するデータの構造体
-type Message struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-}
-
 // GetMessageはクライアントに簡単なメッセージを返す関数
-func GetMessage(w http.ResponseWriter, r *http.Request) {
+func HandleHello(w http.ResponseWriter, r *http.Request) {
 	// アクセスを許可したいアクセス元
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	//アクセスを許可したいHTTPメソッド
@@ -27,7 +23,7 @@ func GetMessage(w http.ResponseWriter, r *http.Request) {
 	// GET
 	if r.Method == http.MethodGet {
 		// メッセージを作成
-		message := Message{
+		message := model.Message{
 			Status:  "200 OK",
 			Message: "Hello, World!",
 		}

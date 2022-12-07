@@ -4,12 +4,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/momeemt/2000s/handleFuncs"
+	"github.com/momeemt/2000s/adapter"
 )
 
 func main() {
-	log.Print("Server Starting...\n")
-	http.HandleFunc("/hello", handleFuncs.GetMessage)
-
-	http.ListenAndServe(":80", nil)
+	router := adapter.Route()
+	log.Printf("Listening on port :80")
+	http.ListenAndServe(":80", router)
 }
