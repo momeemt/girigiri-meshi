@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 
+import { GetPosition } from "../model/Position";
 import { Shops, FetchShops } from "../model/Shops";
 import ShopCardList from "../components/ShopCardList";
 
@@ -12,38 +13,26 @@ export default function Home() {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        console.log("get longitude and latitude");
-        // get longitude and latitude
-        let longitude = 0;
-        let latitude = 0;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    longitude = position.coords.longitude;
-                    latitude = position.coords.latitude;
-                },
-                (error) => {
-                    setError(error.message);
-                }
-            );
-        } else {
-            setError("Geolocation is not supported by this browser.");
-        }
-
-        // fetch shop list
-        // TODO: 本番用の関数に差し替え
-        FetchShops(longitude, latitude).then(
-            (result) => {
-                console.log("promise resolved");
-                setShopList(result);
-                setIsLoaded(true);
+        (async () => {
+            const nowUserPosition = await GetPosition().catch((error) => {
+                setError(error);
+                return null;
+            });
+            if (nowUserPosition === null) {
+                return;
             }
-            // (error) => {
-            //     setIsLoaded(true);
-            //     setError(error);
-            // }
-        );
-        console.log("get longitude and latitude end");
+
+            const shops = await FetchShops(nowUserPosition).catch((error) => {
+                setError(error);
+                return null;
+            });
+            if (shops === null) {
+                return;
+            }
+
+            setShopList(shops);
+            setIsLoaded(true);
+        })();
     }, []);
 
     if (!isLoaded) {

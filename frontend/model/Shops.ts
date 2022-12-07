@@ -1,3 +1,5 @@
+import { Position } from "./Position";
+
 export type Shop = {
     shopName: string;
     shopImageURL: string;
@@ -9,10 +11,7 @@ export type Shop = {
 
 export type Shops = Shop[];
 
-export function FetchShops(
-    longitude: number,
-    latitude: number
-): Promise<Shops> {
+export function FetchShops(position: Position): Promise<Shops> {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve([
