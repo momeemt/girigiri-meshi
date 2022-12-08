@@ -36,6 +36,9 @@ components:
   schemas:
     Location:
       type: object
+      required:
+        - latitude
+        - longtitude
       properties:
         latitude:
           description: 緯度
@@ -49,6 +52,11 @@ components:
           example: 140.1327256
     Restaurant:
       type: object
+      required:
+        - name
+        - location
+        - closeTime
+        - placeId
       properties: 
         name:
           type: string
@@ -59,24 +67,14 @@ components:
         closeTime:
           type: string
           format: date-time
-        photoUrl:
-          type: string
-          example: https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        place_id:
+        placeId:
           type: string
           example: ChIJeSTaRQWbImARznMsCGVeYcw
           description: This id is based on Google Places API
+        photoUrl:
+          type: string
+          example: https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         rating:
           type: number
           format: double
           example: 3.7
-  requestBodies:
-    UserArray:
-      description: List of restaurant object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Restaurant'
-              
