@@ -2,18 +2,12 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import { NextComponentType, NextPageContext } from "next";
 
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import Typography from "@mui/material/Typography";
+import { useRecoilValue } from "recoil";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
-type MapModalProps = {
-    longitude: number;
-    latitude: number;
-    description: string;
-};
+import { Position, PositionAtom } from "../model/Position";
+import { Pin } from "../model/Pin";
 
 const mapModalStyle = {
     position: "absolute",
@@ -27,6 +21,18 @@ const mapModalStyle = {
     p: 4,
 };
 
+export interface MapModalPinProps {
+    shopPins: Pin[];
+}
+
+interface MapContorolProps {
+    center: Position;
+    isMapOpen: boolean;
+    onClose: () => void;
+}
+
+type MapModalProps = MapContorolProps & MapModalPinProps;
+
 const _MapModal: NextComponentType<
     NextPageContext,
     Record<string, unknown>,
@@ -34,11 +40,6 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
-    const [isMapOpen, setIsMapOpen] = React.useState(false);
-    const handleMapOpen = () => setIsMapOpen(true);
-    const handleMapClose = () => setIsMapOpen(false);
-
-    const position: [number, number] = [props.latitude, props.longitude];
     const zoom = 14;
 
     const Map = useMemo(
@@ -51,22 +52,16 @@ const _MapModal: NextComponentType<
     );
 
     return (
-        <Grid container justifyContent="center">
-            <IconButton style={{ color: "#006699" }} onClick={handleMapOpen}>
-                <FmdGoodIcon />
-                <Typography variant="body1">地図を表示</Typography>
-            </IconButton>
-            <Modal open={isMapOpen} onClose={handleMapClose}>
-                <Card sx={mapModalStyle}>
-                    <Map
-                        style={{ height: "100%", width: "100%" }}
-                        center={position}
-                        zoom={zoom}
-                        description={props.description}
-                    ></Map>
-                </Card>
-            </Modal>
-        </Grid>
+        <Modal open={props.isMapOpen} onClose={props.onClose}>
+            <Card sx={mapModalStyle}>
+                <Map
+                    style={{ height: "100%", width: "100%" }}
+                    center={props.center}
+                    zoom={zoom}
+                    shopPins={props.shopPins}
+                ></Map>
+            </Card>
+        </Modal>
     );
 };
 

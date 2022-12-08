@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-import type { Shop } from "./ShopCardList";
-import MapModal from "./MapModal";
+import type { Shop } from "../model/Shops";
+import CardMapButton from "./CardMapButton";
 
 type ShopCardProps = {
     shop: Shop;
@@ -65,11 +65,14 @@ const _ShopCard: NextComponentType<
                 </div>
             </CardContent>
             <CardActions>
-                <MapModal
-                    longitude={shop.longitude}
-                    latitude={shop.latitude}
-                    description={shop.shopName}
-                ></MapModal>
+                <CardMapButton
+                    shopPins={[
+                        {
+                            description: shop.shopName,
+                            position: shop.position,
+                        },
+                    ]}
+                />
             </CardActions>
         </Card>
     );
