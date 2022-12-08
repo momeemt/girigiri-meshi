@@ -13,6 +13,6 @@ func Route() http.Handler {
 	router := mux.NewRouter()
 	router.HandleFunc("/hello", handler.HandleHello)
 	restaurantsHandler := handler.NewRestaurantsHandler(usecase.NewRestuarantsUsecase(infra.NewGooglePlacesApi()))
-	router.HandleFunc("/restaurants", restaurantsHandler.HandleRestaurants)
+	router.HandleFunc("/restaurants", restaurantsHandler.HandleRestaurants).Methods("POST")
 	return router
 }
