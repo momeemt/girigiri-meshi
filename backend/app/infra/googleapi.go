@@ -55,6 +55,7 @@ func (googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model.Re
 	}
 	request := &maps.NearbySearchRequest{
 		Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longtitude},
+		Language: "ja",
 		OpenNow:  true,
 		RankBy:   maps.RankByDistance,
 		Type:     maps.PlaceTypeRestaurant,
