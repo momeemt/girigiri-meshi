@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math"
+	"net/http"
 	"time"
 
 	"github.com/momeemt/2000s/domain/model"
@@ -12,11 +13,19 @@ import (
 	"googlemaps.github.io/maps"
 )
 
-type googlePlacesApi struct{}
+type googlePlacesApi struct {
+	apiKey string
+}
+
+func NewGooglePlacesApi(apiKey string) repository.Restaurant {
+	return &googlePlacesApi{
+		apiKey: apiKey,
+	}
+}
 
 // GetCloseTime implements repository.Restaurant
-func (googlePlacesApi) GetNextCloseTime(restaurant model.Restaurant, now time.Time) (time.Time, error) {
-	client, err := maps.NewClient(maps.WithAPIKey("AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8"))
+func (g *googlePlacesApi) GetNextCloseTime(restaurant model.Restaurant, now time.Time) (time.Time, error) {
+	client, err := maps.NewClient(maps.WithAPIKey(g.apiKey))
 	if err != nil {
 		return time.Time{}, errors.Wrap(err, "error creating new client")
 	}
@@ -48,8 +57,8 @@ func (googlePlacesApi) GetNextCloseTime(restaurant model.Restaurant, now time.Ti
 }
 
 // GetNearbyRestaurants implements repository.Restaurant
-func (googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model.Restaurant, error) {
-	client, err := maps.NewClient(maps.WithAPIKey("AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8"))
+func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model.Restaurant, error) {
+	client, err := maps.NewClient(maps.WithAPIKey(g.apiKey))
 	if err != nil {
 		return nil, errors.Wrap(err, "error creating new client")
 	}
@@ -76,13 +85,32 @@ func (googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model.Re
 			Rating:  v.Rating,
 		}
 		if len(v.Photos) > 0 {
-			result.PhotoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=" + v.Photos[0].PhotoReference + "&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8"
+			photoUrl, err := getUrl(v.Photos[0].PhotoReference, g.apiKey)
+			if err == nil {
+				result.PhotoUrl = photoUrl
+			}
 		}
 		results = append(results, result)
 	}
 	return results, nil
 }
 
-func NewGooglePlacesApi() repository.Restaurant {
-	return googlePlacesApi{}
+func getUrl(photoReference string, apiKey string) (string, error) {
+	url := "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=" + photoReference + "&key=" + apiKey
+	for i := 0; i < 10; i++ {
+		client := &http.Client{
+			CheckRedirect: func(req *http.Request, via []*http.Request) error {
+				return http.ErrUseLastResponse
+			}}
+		res, err := client.Get(url)
+		if err != nil {
+			return "", err
+		}
+		if res.StatusCode == 200 {
+			return url, nil
+		} else {
+			url = res.Header.Get("Location")
+		}
+	}
+	return "", fmt.Errorf("unable to get url")
 }
