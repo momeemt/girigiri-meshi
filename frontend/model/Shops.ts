@@ -27,7 +27,7 @@ export function FetchShops(position: Position): Promise<Shops> {
 
         const body = {
             latitude: position[0],
-            longtitude: position[1],
+            longitude: position[1],
         };
 
         const header = {
