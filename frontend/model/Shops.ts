@@ -4,11 +4,11 @@ import { Position } from "./Position";
 import axios from "axios";
 
 export type Shop = {
-    shopName: string;
-    shopImageURL: string;
-    shopCloseTime: string;
-    starQuantity: number;
-    position: Position;
+    name: string;
+    photoUrl: string;
+    closeTime: string;
+    rating: number;
+    location: Position;
 };
 
 export type Shops = Shop[];
