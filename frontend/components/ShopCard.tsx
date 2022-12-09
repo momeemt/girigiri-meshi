@@ -54,8 +54,7 @@ const _ShopCard: NextComponentType<
     const minute = closeDate.getMinutes();
     const minuteStr = minute < 10 ? "0" + minute : minute;
     const hour = closeDate.getHours();
-    const hourStr = hour < 10 ? "0" + hour : hour;
-    const shopCloseTimeText = hourStr + ":" + minuteStr + "まで";
+    const shopCloseTimeText = hour + ":" + minuteStr + "まで";
 
     return (
         <Card variant="outlined">
