@@ -73,7 +73,7 @@ components:
           description: This id is based on Google Places API
         photoUrl:
           type: string
-          example: https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          example: https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000
         rating:
           type: number
           format: double
