@@ -40,7 +40,7 @@ export function FetchShops(position: Position): Promise<Shops> {
         console.log(body);
 
         axios
-            .post(process.env.NEXT_PUBLIC_SHOPS_FETCH_SERVER, body, header)
+            .post(process.env.NEXT_PUBLIC_SHOPS_FETCH_SERVER+"/restaurants", body, header)
             .then((response) => {
                 console.log(response.data);
                 resolve(response.data);
