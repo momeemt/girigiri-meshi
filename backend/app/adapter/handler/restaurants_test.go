@@ -20,16 +20,16 @@ func TestHandleRestaurants(t *testing.T) {
 	}{
 		{
 			name:     "success",
-			postBody: `{"latitude":35.58276308282412,"longtitude":140.1326089828801}`,
+			postBody: `{"latitude":35.58276308282412,"longitude":140.1326089828801}`,
 			prepareRU: func(m *mock_usecase.MockRestaurants) {
 				m.EXPECT().GetAvailableRestaurants(model.Location{
-					Latitude:   35.58276308282412,
-					Longtitude: 140.1326089828801,
+					Latitude:  35.58276308282412,
+					Longitude: 140.1326089828801,
 				}, gomock.Any()).Return([]model.Restaurant{{
 					Name: "鐵 蘇我本店",
 					Location: model.Location{
-						Latitude:   35.5827517,
-						Longtitude: 140.1327256,
+						Latitude:  35.5827517,
+						Longitude: 140.1327256,
 					},
 					CloseTime: time.Date(2022, 12, 7, 22, 00, 00, 00, time.Local),
 					PhotoUrl:  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDz7Dj5GkEsTnKGBetRfIK-GqhVNz_CAGyuOsX_UC8q_ZB_MLWr5VhOyjK-rzB91ZfNK3epikKXyiyguabpXOBWRypU4Nd18o9atheKz-Fv9OcQ6VYSXXqjJSeu8wJH0h-YWVMwjEHx2ezA7tvKv4tjRg9a8yLx3TKgJZEGhlx5-us4M&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",

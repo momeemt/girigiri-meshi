@@ -39,7 +39,7 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 			// log したい
 			continue
 		}
-		duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longtitude, v.Location.Latitude, v.Location.Longtitude)/4) + "h")
+		duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
 		if err != nil {
 			// log したい
 			continue

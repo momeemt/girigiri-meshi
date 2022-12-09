@@ -26,8 +26,8 @@ type Location struct {
 	// Latitude 緯度
 	Latitude float64 `json:"latitude"`
 
-	// Longtitude 経度
-	Longtitude float64 `json:"longtitude"`
+	// Longitude 経度
+	Longitude float64 `json:"longitude"`
 }
 
 // Restaurant defines model for Restaurant.

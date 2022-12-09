@@ -33,8 +33,8 @@ func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http
 	w.Header().Set("Content-Type", "application/json")
 	availableRestaurants, err := restaurants.restaurantsUsecase.GetAvailableRestaurants(
 		model.Location{
-			Latitude:   locationApiio.Latitude,
-			Longtitude: locationApiio.Longtitude,
+			Latitude:  locationApiio.Latitude,
+			Longitude: locationApiio.Longitude,
 		}, time.Now())
 	if err != nil {
 		ReturnErr(err, w)
@@ -45,8 +45,8 @@ func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http
 		response = append(response, apiio.Restaurant{
 			CloseTime: v.CloseTime,
 			Location: apiio.Location{
-				Latitude:   v.Location.Latitude,
-				Longtitude: v.Location.Longtitude,
+				Latitude:  v.Location.Latitude,
+				Longitude: v.Location.Longitude,
 			},
 			Name:     v.Name,
 			PhotoUrl: &v.PhotoUrl,
