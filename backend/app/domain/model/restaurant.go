@@ -8,5 +8,5 @@ type Restaurant struct {
 	CloseTime time.Time
 	PhotoUrl  string
 	PlaceId   string //dependent to Google Maps API
-	Rating    int
+	Rating    float32
 }

@@ -1,3 +1,4 @@
+//go:generate mockgen -source=$GOFILE -package=mock_$GOPACKAGE -destination=../../mock/mock_$GOPACKAGE/mock_$GOFILE
 package repository
 
 import (
@@ -8,5 +9,5 @@ import (
 
 type Restaurant interface {
 	GetNearbyRestaurants(model.Location) ([]model.Restaurant, error)
-	GetCloseTime(model.Restaurant) (time.Time, error)
+	GetNextCloseTime(model.Restaurant, time.Time) (time.Time, error)
 }
