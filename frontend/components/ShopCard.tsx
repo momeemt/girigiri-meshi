@@ -26,25 +26,27 @@ const _ShopCard: NextComponentType<
     const MAX_STAR_QUANTITY = 5;
 
     const { shop } = props;
-    const shopCloseTimeText = shop.shopCloseTime + "まで";
+    const closeDate = new Date(shop.closeTime);
+    const shopCloseTimeText = closeDate.getHours() + ":" + closeDate.getMinutes() + "まで";
+    const rating = Math.round(shop.rating);
 
     return (
         <Card variant="outlined">
             <CardMedia
                 component="img"
                 height="200"
-                image={shop.shopImageURL}
-                alt={shop.shopName}
+                image={shop.photoUrl}
+                alt={shop.name}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {shop.shopName}
+                    {shop.name}
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
                     {shopCloseTimeText}
                 </Typography>
                 <div style={{ position: "relative", bottom: "-0.5em" }}>
-                    {[...Array(shop.starQuantity)].map((_, index) => {
+                    {[...Array(rating)].map((_, index) => {
                         return (
                             <StarIcon
                                 style={{ color: "#ff6666" }}
@@ -52,7 +54,7 @@ const _ShopCard: NextComponentType<
                             />
                         );
                     })}
-                    {[...Array(MAX_STAR_QUANTITY - shop.starQuantity)].map(
+                    {[...Array(MAX_STAR_QUANTITY - rating)].map(
                         (_, index) => {
                             return (
                                 <StarBorderIcon
@@ -68,8 +70,8 @@ const _ShopCard: NextComponentType<
                 <CardMapButton
                     shopPins={[
                         {
-                            description: shop.shopName,
-                            position: shop.position,
+                            description: shop.name,
+                            position: shop.location,
                         },
                     ]}
                 />
