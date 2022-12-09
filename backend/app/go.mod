@@ -6,6 +6,7 @@ require (
 	github.com/getkin/kin-openapi v0.110.0
 	github.com/gorilla/mux v1.8.0
 	github.com/labstack/echo/v4 v4.9.1
+	github.com/rs/cors v1.8.2
 )
 
 require (
