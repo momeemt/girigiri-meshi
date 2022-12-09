@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -41,7 +42,7 @@ func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http
 		return
 	}
 	var response []apiio.Restaurant
-	for _, v := range availableRestaurants {
+	for i, v := range availableRestaurants {
 		response = append(response, apiio.Restaurant{
 			CloseTime: v.CloseTime,
 			Location: apiio.Location{
@@ -49,7 +50,7 @@ func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http
 				Longitude: v.Location.Longitude,
 			},
 			Name:     v.Name,
-			PhotoUrl: &v.PhotoUrl,
+			PhotoUrl: &availableRestaurants[i].PhotoUrl,
 			PlaceId:  v.PlaceId,
 			Rating:   func(f float64) *float64 { return &f }(float64(v.Rating)),
 		})
