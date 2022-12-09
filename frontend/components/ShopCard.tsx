@@ -26,9 +26,14 @@ const _ShopCard: NextComponentType<
     const MAX_STAR_QUANTITY = 5;
 
     const { shop } = props;
-    const closeDate = new Date(shop.closeTime);
-    const shopCloseTimeText = closeDate.getHours() + ":" + closeDate.getMinutes() + "まで";
     const rating = Math.round(shop.rating);
+
+    const closeDate = new Date(shop.closeTime);
+    const minute = closeDate.getMinutes();
+    const minuteStr = minute < 10 ? "0" + minute : minute;
+    const hour = closeDate.getHours();
+    const hourStr = hour < 10 ? "0" + hour : hour;
+    const shopCloseTimeText = hourStr + ":" + minuteStr + "まで";
 
     return (
         <Card variant="outlined">
