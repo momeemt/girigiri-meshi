@@ -63,7 +63,7 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model
 		return nil, errors.Wrap(err, "error creating new client")
 	}
 	request := &maps.NearbySearchRequest{
-		Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longtitude},
+		Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longitude},
 		Language: "ja",
 		OpenNow:  true,
 		RankBy:   maps.RankByDistance,
@@ -78,8 +78,8 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model
 		result := model.Restaurant{
 			Name: v.Name,
 			Location: model.Location{
-				Latitude:   v.Geometry.Location.Lat,
-				Longtitude: v.Geometry.Location.Lng,
+				Latitude:  v.Geometry.Location.Lat,
+				Longitude: v.Geometry.Location.Lng,
 			},
 			PlaceId: v.PlaceID,
 			Rating:  v.Rating,

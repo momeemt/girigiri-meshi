@@ -23,18 +23,18 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 		{
 			name:     "success",
 			wantErr:  false,
-			location: model.Location{Latitude: 35.706028214316625, Longtitude: 139.71668341868383},
+			location: model.Location{Latitude: 35.706028214316625, Longitude: 139.71668341868383},
 			time:     time.Date(2022, 12, 8, 21, 0, 0, 0, time.Local),
 			prepareRR: func(m *mock_repository.MockRestaurant) {
 				m.EXPECT().GetNearbyRestaurants(model.Location{
-					Latitude:   35.706028214316625,
-					Longtitude: 139.71668341868383,
+					Latitude:  35.706028214316625,
+					Longitude: 139.71668341868383,
 				}).Return([]model.Restaurant{
 					{
 						Name: "Saizeriya Nishi-Waseda",
 						Location: model.Location{
-							Latitude:   35.70670800000001,
-							Longtitude: 139.716813,
+							Latitude:  35.70670800000001,
+							Longitude: 139.716813,
 						},
 						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJu4I8HRyNGGAR0Zb6c2hWAoc",
@@ -43,8 +43,8 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 					{
 						Name: "ワンプラスダンプリング 西早稲田",
 						Location: model.Location{
-							Latitude:   35.7065364,
-							Longtitude: 139.7174725,
+							Latitude:  35.7065364,
+							Longitude: 139.7174725,
 						},
 						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJIdqmb92NGGAR3SetKe6rY2Q",
@@ -52,8 +52,8 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 					}, {
 						Name: "Restaurant & Bar New school",
 						Location: model.Location{
-							Latitude:   35.8065153,
-							Longtitude: 139.7178228,
+							Latitude:  35.8065153,
+							Longitude: 139.7178228,
 						},
 						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJAWs2PxyNGGARySvrTT7hkPw",
@@ -63,8 +63,8 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 				m.EXPECT().GetNextCloseTime(model.Restaurant{
 					Name: "Saizeriya Nishi-Waseda",
 					Location: model.Location{
-						Latitude:   35.70670800000001,
-						Longtitude: 139.716813,
+						Latitude:  35.70670800000001,
+						Longitude: 139.716813,
 					},
 					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJu4I8HRyNGGAR0Zb6c2hWAoc",
@@ -73,8 +73,8 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 				m.EXPECT().GetNextCloseTime(model.Restaurant{
 					Name: "ワンプラスダンプリング 西早稲田",
 					Location: model.Location{
-						Latitude:   35.7065364,
-						Longtitude: 139.7174725,
+						Latitude:  35.7065364,
+						Longitude: 139.7174725,
 					},
 					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJIdqmb92NGGAR3SetKe6rY2Q",
@@ -83,8 +83,8 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 				m.EXPECT().GetNextCloseTime(model.Restaurant{
 					Name: "Restaurant & Bar New school",
 					Location: model.Location{
-						Latitude:   35.8065153,
-						Longtitude: 139.7178228,
+						Latitude:  35.8065153,
+						Longitude: 139.7178228,
 					},
 					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJAWs2PxyNGGARySvrTT7hkPw",

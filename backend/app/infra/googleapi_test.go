@@ -19,14 +19,14 @@ func Test_googlePlacesApi_GetNearbyRestaurants(t *testing.T) {
 			name:    "soga",
 			wantErr: false,
 			location: model.Location{
-				Latitude:   35.5827517,
-				Longtitude: 140.1327256,
+				Latitude:  35.5827517,
+				Longitude: 140.1327256,
 			},
 		},
 		{
 			name:     "waseda",
 			wantErr:  false,
-			location: model.Location{Latitude: 35.706028214316625, Longtitude: 139.71668341868383},
+			location: model.Location{Latitude: 35.706028214316625, Longitude: 139.71668341868383},
 		},
 	}
 	for _, tt := range tests {

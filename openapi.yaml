@@ -38,14 +38,14 @@ components:
       type: object
       required:
         - latitude
-        - longtitude
+        - longitude
       properties:
         latitude:
           description: 緯度
           type: number
           format: double
           example: 35.5827517
-        longtitude:
+        longitude:
           description: 経度
           type: number
           format: double
