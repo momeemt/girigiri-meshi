@@ -24,9 +24,31 @@ const _ShopCard: NextComponentType<
     console.log("ShopCard render start");
 
     const MAX_STAR_QUANTITY = 5;
-
     const { shop } = props;
-    const rating = Math.round(shop.rating);
+
+    let ratingDom;
+    if (shop.rating === undefined) {
+        ratingDom = <>評価なし</>;
+    } else {
+        const rating = Math.round(shop.rating);
+        ratingDom = (
+            <>
+                {[...Array(rating)].map((_, index) => {
+                    return (
+                        <StarIcon style={{ color: "#ff6666" }} key={index} />
+                    );
+                })}
+                {[...Array(MAX_STAR_QUANTITY - rating)].map((_, index) => {
+                    return (
+                        <StarBorderIcon
+                            style={{ color: "#ff6666" }}
+                            key={index}
+                        />
+                    );
+                })}
+            </>
+        );
+    }
 
     const closeDate = new Date(shop.closeTime);
     const minute = closeDate.getMinutes();
@@ -51,24 +73,7 @@ const _ShopCard: NextComponentType<
                     {shopCloseTimeText}
                 </Typography>
                 <div style={{ position: "relative", bottom: "-0.5em" }}>
-                    {[...Array(rating)].map((_, index) => {
-                        return (
-                            <StarIcon
-                                style={{ color: "#ff6666" }}
-                                key={index}
-                            />
-                        );
-                    })}
-                    {[...Array(MAX_STAR_QUANTITY - rating)].map(
-                        (_, index) => {
-                            return (
-                                <StarBorderIcon
-                                    style={{ color: "#ff6666" }}
-                                    key={index}
-                                />
-                            );
-                        }
-                    )}
+                    {ratingDom}
                 </div>
             </CardContent>
             <CardActions>
