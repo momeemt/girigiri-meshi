@@ -36,7 +36,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 							Latitude:   35.70670800000001,
 							Longtitude: 139.716813,
 						},
-						PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDyYirIzcXuADvUgJLalN2eTscRoAM6MZ6alsexTrg5glpLCYh9hPeH5CCowWM3K3fZeI-AypafFJBG1fkkpXzeMew8G2uJabkIKKQHKhhcQHip4YqHQG14PGDe0gpgEMiN_xQYjTuIEvdRaqIPL5Koh4ijNcB4SNHpXKI0P6Lh6EVZ5&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJu4I8HRyNGGAR0Zb6c2hWAoc",
 						Rating:   3.5,
 					},
@@ -46,7 +46,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 							Latitude:   35.7065364,
 							Longtitude: 139.7174725,
 						},
-						PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDzOxFqJ8oQZGO4KRTSDU0j9hxJ3Df6dLAuV-JTd_F2aB4XCpIZf9yXoa8UzgZ6JPH-7Ra1Eel3kP5OS0tszYavGlJ0cKONSIlUBdsww7GsrKHfPCIXYjbvukftv72Xy-L1tBUUDZrNmctDEG_aIYpncGR647mVyGonhXAh_0cxHioaX&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJIdqmb92NGGAR3SetKe6rY2Q",
 						Rating:   4.1,
 					}, {
@@ -55,7 +55,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 							Latitude:   35.8065153,
 							Longtitude: 139.7178228,
 						},
-						PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDzjx3XypgDP_nPHHlfn4ALOPUXpSUVM0YYGSE_nQO54IcqAtf7GSZDxWOiWYnM1VbweJiVyNk-8XTxMK9Myf-bNTB4a-oRLNTl21JxY3-zd0dwPXlMftO6yD56jVhs6WRJxfcHQFM_Dw-yBe5WvIGNO58XcqO56MlQtvMyitpBIBkt-&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+						PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 						PlaceId:  "ChIJAWs2PxyNGGARySvrTT7hkPw",
 						Rating:   4.3,
 					},
@@ -66,7 +66,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 						Latitude:   35.70670800000001,
 						Longtitude: 139.716813,
 					},
-					PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDyYirIzcXuADvUgJLalN2eTscRoAM6MZ6alsexTrg5glpLCYh9hPeH5CCowWM3K3fZeI-AypafFJBG1fkkpXzeMew8G2uJabkIKKQHKhhcQHip4YqHQG14PGDe0gpgEMiN_xQYjTuIEvdRaqIPL5Koh4ijNcB4SNHpXKI0P6Lh6EVZ5&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJu4I8HRyNGGAR0Zb6c2hWAoc",
 					Rating:   3.5,
 				}, gomock.Any()).Return(time.Date(2022, 12, 8, 18, 00, 0, 0, time.Local), nil)
@@ -76,7 +76,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 						Latitude:   35.7065364,
 						Longtitude: 139.7174725,
 					},
-					PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDzOxFqJ8oQZGO4KRTSDU0j9hxJ3Df6dLAuV-JTd_F2aB4XCpIZf9yXoa8UzgZ6JPH-7Ra1Eel3kP5OS0tszYavGlJ0cKONSIlUBdsww7GsrKHfPCIXYjbvukftv72Xy-L1tBUUDZrNmctDEG_aIYpncGR647mVyGonhXAh_0cxHioaX&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJIdqmb92NGGAR3SetKe6rY2Q",
 					Rating:   4.1,
 				}, gomock.Any()).Return(time.Date(2022, 12, 8, 22, 00, 00, 00, time.Local), nil)
@@ -86,7 +86,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 						Latitude:   35.8065153,
 						Longtitude: 139.7178228,
 					},
-					PhotoUrl: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=AW30NDzjx3XypgDP_nPHHlfn4ALOPUXpSUVM0YYGSE_nQO54IcqAtf7GSZDxWOiWYnM1VbweJiVyNk-8XTxMK9Myf-bNTB4a-oRLNTl21JxY3-zd0dwPXlMftO6yD56jVhs6WRJxfcHQFM_Dw-yBe5WvIGNO58XcqO56MlQtvMyitpBIBkt-&key=AIzaSyD73WTJXHUol9u8BsgINXK0DkdfqiQurd8",
+					PhotoUrl: "https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000",
 					PlaceId:  "ChIJAWs2PxyNGGARySvrTT7hkPw",
 					Rating:   4.3,
 				}, gomock.Any()).Return(time.Date(2022, 12, 8, 22, 30, 0, 0, time.Local), nil)
