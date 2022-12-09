@@ -7,7 +7,7 @@ export type Shop = {
     name: string;
     photoUrl: string;
     closeTime: string;
-    rating: number;
+    rating: number | undefined;
     location: Position;
 };
 

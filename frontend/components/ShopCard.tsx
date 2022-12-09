@@ -24,11 +24,37 @@ const _ShopCard: NextComponentType<
     console.log("ShopCard render start");
 
     const MAX_STAR_QUANTITY = 5;
-
     const { shop } = props;
+
+    let ratingDom;
+    if (shop.rating === undefined) {
+        ratingDom = <>評価なし</>;
+    } else {
+        const rating = Math.round(shop.rating);
+        ratingDom = (
+            <>
+                {[...Array(rating)].map((_, index) => {
+                    return (
+                        <StarIcon style={{ color: "#ff6666" }} key={index} />
+                    );
+                })}
+                {[...Array(MAX_STAR_QUANTITY - rating)].map((_, index) => {
+                    return (
+                        <StarBorderIcon
+                            style={{ color: "#ff6666" }}
+                            key={index}
+                        />
+                    );
+                })}
+            </>
+        );
+    }
+
     const closeDate = new Date(shop.closeTime);
-    const shopCloseTimeText = closeDate.getHours() + ":" + closeDate.getMinutes() + "まで";
-    const rating = Math.round(shop.rating);
+    const minute = closeDate.getMinutes();
+    const minuteStr = minute < 10 ? "0" + minute : minute;
+    const hour = closeDate.getHours();
+    const shopCloseTimeText = hour + ":" + minuteStr + "まで";
 
     return (
         <Card variant="outlined">
@@ -46,24 +72,7 @@ const _ShopCard: NextComponentType<
                     {shopCloseTimeText}
                 </Typography>
                 <div style={{ position: "relative", bottom: "-0.5em" }}>
-                    {[...Array(rating)].map((_, index) => {
-                        return (
-                            <StarIcon
-                                style={{ color: "#ff6666" }}
-                                key={index}
-                            />
-                        );
-                    })}
-                    {[...Array(MAX_STAR_QUANTITY - rating)].map(
-                        (_, index) => {
-                            return (
-                                <StarBorderIcon
-                                    style={{ color: "#ff6666" }}
-                                    key={index}
-                                />
-                            );
-                        }
-                    )}
+                    {ratingDom}
                 </div>
             </CardContent>
             <CardActions>
