@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useRecoilValue } from "recoil";
 
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -9,6 +10,7 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 import { useWindowSize } from "../hooks/useWindowsSize";
 import { Pin } from "../model/Pin";
+import { PositionAtom } from "../model/Position";
 
 type MapProps = {
     center: [number, number];
@@ -41,6 +43,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
     const [width] = useWindowSize();
     const originalIcon = new originalIconExtended();
     const currentUserIcon = new currentUserIconExtended();
+    const userPosition = useRecoilValue(PositionAtom);
 
     return (
         <MapContainer
@@ -74,7 +77,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
                     </Marker>
                 );
             })}
-            <Marker icon={currentUserIcon} position={props.center} key="current-user-position" />
+            <Marker icon={currentUserIcon} position={userPosition} key="current-user-position" />
         </MapContainer>
     );
 };
