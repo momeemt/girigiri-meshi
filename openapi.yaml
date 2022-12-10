@@ -32,6 +32,29 @@ paths:
                   $ref: '#/components/schemas/Restaurant'
         '500':
           description: Internal server error
+  /restaurants/details:
+    parameters:
+      - name: placeId
+        in: query
+        description: the place id for the restaurant you want the detail of 
+        required: true
+        schema:
+          type: string
+          example: ChIJeSTaRQWbImARznMsCGVeYcw
+    get:
+      tags: 
+       - restaurant
+      summary: Details for restaurant
+      operationId: getRestaurantDetail
+      responses:
+        '200':
+          description: Successful operation
+          content: 
+            application/json: 
+              schema:
+                $ref: '#components/schemas/RestaurantDetail'
+        '500':
+          description: Internal server error
 components:
   schemas:
     Location:
@@ -50,6 +73,33 @@ components:
           type: number
           format: double
           example: 140.1327256
+    Review:
+      type: object
+      required:
+       - author_name
+       - rating
+       - relativeTimeDescription
+       - text
+      properties:
+        author_name:
+          type: string
+          description: name of the review author_name
+          example: Katsumi
+        profilePhotoUrl:
+          type: string
+          description: url to the author's profile photo
+        rating:
+          type: integer
+          description: rating by the user
+          example: 4
+        relativeTimeDescription:
+          type: string
+          description: when the review was written
+          example: 1年前
+        text:
+          type: string
+          description: the main text of the review
+          example: 本当に美味しい。何か大きなイベントの前には必ず食べるし、これを食べたら何も心配ない。全て上手く行く。
     Restaurant:
       type: object
       required:
@@ -72,9 +122,54 @@ components:
           example: ChIJeSTaRQWbImARznMsCGVeYcw
           description: This id is based on Google Places API
         photoUrl:
+          description: Photo url. Returned on /restaurants
           type: string
           example: https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000
         rating:
           type: number
           format: double
           example: 3.7
+    RestaurantDetail:
+      type: object
+      required:
+        - photoUrls
+      properties:
+        placeId: 
+          type: string
+          example: ChIJeSTaRQWbImARznMsCGVeYcw
+        photoUrls:
+          description: Array of photoUrl. Returned on /restaurants/details?placeId=XXXX
+          type: array
+          items:
+            type: string
+            example: https://lh3.googleusercontent.com/places/AJDFj40BrNvrjCwyFnyutzhWTBod6mrELN7sABx13W1H2pFs0ImIqrrtBaI5n_LQBMRvqdkybqkj8qCdtNwiCbfNsgAkUbkvs5luiMA=s1600-w1000
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        servesBeer:
+          type: boolean
+        servesBreakfast:
+          type: boolean
+        servesBranch:
+          type: boolean
+        servesDinner:
+          type: boolean
+        servesLunch:
+          type: boolean
+        servesVegetarianFood:
+          type: boolean
+        servesWine:
+          type: boolean
+        takeout:
+          type: boolean
+        userRatingsTotal:
+          type: integer
+          description: number of user userRatingsTotal
+          example: 577
+        url:
+          type: string
+          description: Url to the page google ownes related to the page. This must be embedded.
+        website:
+          type: string
+          description: Url to the official page of the restaurant.
