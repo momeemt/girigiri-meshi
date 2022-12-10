@@ -39,7 +39,7 @@ const _MapModal: NextComponentType<
 > = (props: MapModalProps) => {
     console.log("MapModal render start");
 
-    const zoom = 14;
+    const zoom = 19;
 
     const Map = useMemo(
         () =>
