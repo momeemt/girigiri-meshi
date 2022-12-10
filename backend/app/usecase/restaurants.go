@@ -33,47 +33,20 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 	if err != nil {
 		return nil, errors.Wrap(err, "error while getting nearby restaurants")
 	}
-	c := make(chan struct {
-		time.Time
-		error
-	})
 	for _, v := range restaurants {
-		go func(restaurant model.Restaurant, c chan struct {
-			time.Time
-			error
-		}) {
-			closeTime, err := r.restaurantRepository.GetNextCloseTime(restaurant, now)
-			if err != nil {
-				c <- struct {
-					time.Time
-					error
-				}{time.Time{}, err}
-			} else {
-				c <- struct {
-					time.Time
-					error
-				}{closeTime, nil}
-			}
-		}(v, c)
-	}
-
-	for _, v := range restaurants {
-		result := <-c
-		if result.error != nil {
+		v.CloseTime, err = r.restaurantRepository.GetNextCloseTime(v, now)
+		if err != nil {
 			// log したい
 			continue
-		} else {
-			v.CloseTime = result.Time
-			duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
-			if err != nil {
-				// log したい
-				continue
-			}
-			//徒歩で時速4kmとして直線距離で計算した到着時刻+30分後に着かない場合弾く
-			arrivalTime := now.Add(duration).Add(30 * time.Minute)
-			if arrivalTime.Before(v.CloseTime) {
-				returnRestaurants = append(returnRestaurants, v)
-			}
+		}
+		duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
+		if err != nil {
+			// log したい
+			continue
+		}
+		arrivalTime := now.Add(duration).Add(30 * time.Minute)
+		if arrivalTime.Before(v.CloseTime) {
+			returnRestaurants = append(returnRestaurants, v)
 		}
 	}
 	return returnRestaurants, nil

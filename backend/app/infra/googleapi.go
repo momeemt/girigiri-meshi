@@ -74,36 +74,25 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model
 		return nil, errors.Wrap(err, "error getting response")
 	}
 	var results []model.Restaurant
-	c := make(chan model.Restaurant)
 	for _, v := range response.Results {
-		go func(searchResult maps.PlacesSearchResult) {
-			c <- placesSearchResultToRestaurants(searchResult, g.apiKey)
-		}(v)
-	}
-	for range response.Results {
-		result := <-c
+		result := model.Restaurant{
+			Name: v.Name,
+			Location: model.Location{
+				Latitude:  v.Geometry.Location.Lat,
+				Longitude: v.Geometry.Location.Lng,
+			},
+			PlaceId: v.PlaceID,
+			Rating:  v.Rating,
+		}
+		if len(v.Photos) > 0 {
+			photoUrl, err := getUrl(v.Photos[0].PhotoReference, g.apiKey)
+			if err == nil {
+				result.PhotoUrl = photoUrl
+			}
+		}
 		results = append(results, result)
 	}
 	return results, nil
-}
-
-func placesSearchResultToRestaurants(searchResult maps.PlacesSearchResult, apiKey string) model.Restaurant {
-	result := model.Restaurant{
-		Name: searchResult.Name,
-		Location: model.Location{
-			Latitude:  searchResult.Geometry.Location.Lat,
-			Longitude: searchResult.Geometry.Location.Lng,
-		},
-		PlaceId: searchResult.PlaceID,
-		Rating:  searchResult.Rating,
-	}
-	if len(searchResult.Photos) > 0 {
-		photoUrl, err := getUrl(searchResult.Photos[0].PhotoReference, apiKey)
-		if err == nil {
-			result.PhotoUrl = photoUrl
-		}
-	}
-	return result
 }
 
 func getUrl(photoReference string, apiKey string) (string, error) {
