@@ -21,7 +21,7 @@ export const ShopsAtom = atom({
 export function FetchShops(position: Position): Promise<Shops> {
     return new Promise((resolve, reject) => {
         if (process.env.NEXT_PUBLIC_SHOPS_FETCH_SERVER === undefined) {
-            reject("SHOPS_FETCH_SERVER is not defined");
+            reject("NEXT_PUBLIC_SHOPS_FETCH_SERVER is not defined");
             return;
         }
 
