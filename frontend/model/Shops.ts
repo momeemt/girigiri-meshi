@@ -11,6 +11,17 @@ export type Shop = {
     location: Position;
 };
 
+type FetchShop = {
+    name: string;
+    photoUrl: string;
+    closeTime: string;
+    rating: number | undefined;
+    location: {
+        latitude: number;
+        longitude: number;
+    };
+};
+
 export type Shops = Shop[];
 
 export const ShopsAtom = atom({
@@ -42,11 +53,18 @@ export function FetchShops(position: Position): Promise<Shops> {
         axios
             .post(process.env.NEXT_PUBLIC_SHOPS_FETCH_SERVER, body, header)
             .then((response) => {
-                console.log(response.data);
-                resolve(response.data);
+                const res = response.data.map((shop: FetchShop) => {
+                    return {
+                        name: shop.name,
+                        photoUrl: shop.photoUrl,
+                        closeTime: shop.closeTime,
+                        rating: shop.rating,
+                        location: [shop.location.latitude, shop.location.longitude],
+                    };
+                });
+                resolve(res);
             })
             .catch((error) => {
-                console.log(error);
                 reject(error.message);
             });
     });
