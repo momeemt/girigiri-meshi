@@ -32,7 +32,7 @@ const _Loading: NextComponentType<
     Record<string, unknown>
 > = () => {
     return (
-      <Grid container alignItems="center" justifyContent="center" height="100dvh">
+      <Grid container alignItems="center" justifyContent="center" height="100dvh" className="fadeIn">
           <Grid item>
               <Grid container justifyContent="center" direction="column" spacing="48">
                   <Grid item textAlign="center">
