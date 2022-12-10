@@ -21,7 +21,7 @@ const _ShopCardList: NextComponentType = () => {
                         sm={6}
                         md={4}
                         lg={3}
-                        key={shop.shopName + shop.shopImageURL}
+                        key={shop.name + shop.photoUrl}
                     >
                         <ShopCard shop={shop} />
                     </Grid>

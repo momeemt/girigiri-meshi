@@ -33,8 +33,9 @@ const _AllPinMapButton: NextComponentType = () => {
     const shops = useRecoilValue(ShopsAtom);
     const shopPins = shops.map((shop) => {
         return {
-            description: shop.shopName,
-            position: shop.position,
+            description: shop.name,
+            position: shop.location,
+            photoURL: shop.photoUrl,
         };
     });
 
