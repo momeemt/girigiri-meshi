@@ -3,8 +3,7 @@ import { FC } from "react";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
-import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconUrl from "public/pin.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 import { Pin } from "../model/Pin";
@@ -17,8 +16,9 @@ type MapProps = {
 };
 
 L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl.src,
+    iconRetinaUrl: iconUrl.src,
     iconUrl: iconUrl.src,
+    iconSize: [30, 30],
     shadowUrl: shadowUrl.src,
 });
 
