@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import iconUrl from "public/pin.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
+import { useWindowSize } from "../hooks/useWindowsSize";
 import { Pin } from "../model/Pin";
 
 type MapProps = {
@@ -24,6 +25,7 @@ L.Icon.Default.mergeOptions({
 
 const Map: FC<MapProps> = (props: MapProps) => {
     console.log("Map render start");
+    const [width] = useWindowSize();
 
     return (
         <MapContainer
@@ -45,12 +47,12 @@ const Map: FC<MapProps> = (props: MapProps) => {
                             shopPin.position[1]
                         }
                     >
-                        <Popup>
+                        <Popup maxWidth={width * 0.5}>
                             <h2>{shopPin.description}</h2>
                             <br></br>
                             <img
                                 src={shopPin.photoURL}
-                                style={{ height: "10em" }}
+                                style={{ height: "8em", width: "100%" }}
                             ></img>
                         </Popup>
                     </Marker>
