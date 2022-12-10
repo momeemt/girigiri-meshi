@@ -46,6 +46,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
                         }
                     >
                         <Popup>{shopPin.description}</Popup>
+                        <img src={shopPin.photoURL}></img>
                     </Marker>
                 );
             })}
