@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500&display=swap');
+
+body {
+  margin: 0;
+}
+
+.fadeIn {
+  animation-name: fadeInAnimation;
+  animation-duration: 1.0s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeOut {
+  animation-name: fadeOutAnimation;
+  animation-duration: 1.0s;
+  animation-fill-mode: forwards;
+  opacity: 1;
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

@@ -7,6 +7,7 @@ import { PositionAtom, GetUserPosition } from "../model/Position";
 import { ShopsAtom, FetchShops } from "../model/Shops";
 import ShopCardList from "../components/ShopCardList";
 import AllPinMapButton from "../components/AllPinMapButton";
+import Loading from "../components/Loading";
 
 export default function Home() {
     console.log("index render start");
@@ -43,7 +44,7 @@ export default function Home() {
     }, []);
 
     if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     if (error) {
@@ -51,7 +52,7 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className="fadeIn">
             <Head>
                 <title>GiriGiriMeshi</title>
                 <meta
