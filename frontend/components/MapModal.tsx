@@ -2,11 +2,10 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import { NextComponentType, NextPageContext } from "next";
 
-import { useRecoilValue } from "recoil";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 
-import { Position, PositionAtom } from "../model/Position";
+import { Position } from "../model/Position";
 import { Pin } from "../model/Pin";
 
 const mapModalStyle = {

@@ -81,6 +81,7 @@ const _ShopCard: NextComponentType<
                         {
                             description: shop.name,
                             position: shop.location,
+                            photoURL: shop.photoUrl,
                         },
                     ]}
                 />
