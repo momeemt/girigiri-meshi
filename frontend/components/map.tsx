@@ -45,8 +45,14 @@ const Map: FC<MapProps> = (props: MapProps) => {
                             shopPin.position[1]
                         }
                     >
-                        <Popup>{shopPin.description}</Popup>
-                        <img src={shopPin.photoURL}></img>
+                        <Popup>
+                            <h2>{shopPin.description}</h2>
+                            <br></br>
+                            <img
+                                src={shopPin.photoURL}
+                                style={{ height: "10em" }}
+                            ></img>
+                        </Popup>
                     </Marker>
                 );
             })}
