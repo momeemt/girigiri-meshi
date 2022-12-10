@@ -169,7 +169,7 @@ components:
           example: 577
         url:
           type: string
-          description: Url to the page google ownes related to the page. This must be embedded.
+          description: Url to the page google ownes related to the page. This must be embedded if exists.
         website:
           type: string
           description: Url to the official page of the restaurant.
