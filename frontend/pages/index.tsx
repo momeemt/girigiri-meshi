@@ -1,7 +1,10 @@
 import Head from "next/head";
+import Image from "next/image"
 import React, { useState, useEffect } from "react";
 
 import { useSetRecoilState } from "recoil";
+
+import Grid from "@mui/material/Grid";
 
 import { PositionAtom, GetUserPosition } from "../model/Position";
 import { ShopsAtom, FetchShops } from "../model/Shops";
@@ -61,7 +64,17 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ShopCardList></ShopCardList>
+            <Grid container alignItems="center" justifyContent="center" className="fadeIn" style={{ width: '100%' }}>
+                <Grid item style={{ maxWidth: '400px', width: '80%', maxHeight: '400px', height: '60dvw' }}>
+                    <div style={{ position: 'relative', width: '100%', height: '100%', textAlign: 'center' }}>
+                        <Image src="/logo.png" alt="logo" layout="fill" objectFit="contain" />
+                    </div>
+                </Grid>
+            </Grid>
+
+            <div style={{ padding: '0 10%', backgroundColor: '#F6D60F' }}>
+                <ShopCardList></ShopCardList>
+            </div>
             <AllPinMapButton></AllPinMapButton>
         </div>
     );
