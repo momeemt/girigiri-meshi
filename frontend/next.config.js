@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    reactStrictMode: true,
-    swcMinify: true,
-};
+/* eslint-disable @typescript-eslint/no-var-requires */
+const withInterceptStdout = require("next-intercept-stdout");
+
+const nextConfig = withInterceptStdout(
+    {
+        reactStrictMode: true,
+        swcMinify: true,
+    },
+    (text) => (text.includes("Duplicate atom key") ? "" : text)
+);
 
 module.exports = nextConfig;
