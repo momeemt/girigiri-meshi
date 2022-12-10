@@ -3,7 +3,8 @@ import { FC } from "react";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import iconUrl from "public/pin.png";
+import originalIconUrl from "public/pin.png";
+import currentUserIconUrl from "public/running.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 import { useWindowSize } from "../hooks/useWindowsSize";
@@ -16,16 +17,30 @@ type MapProps = {
     shopPins: Pin[];
 };
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconUrl.src,
-    iconUrl: iconUrl.src,
-    iconSize: [30, 30],
-    shadowUrl: shadowUrl.src,
+const originalIconExtended = L.Icon.extend({
+    options: {
+        iconRetinaUrl: originalIconUrl.src,
+        iconUrl: originalIconUrl.src,
+        iconSize: [30, 30],
+        iconAnchor: [13, 30],
+        shadowUrl: shadowUrl.src
+    }
+});
+
+const currentUserIconExtended = L.Icon.extend({
+    options: {
+        iconRetinaUrl: currentUserIconUrl.src,
+        iconUrl: currentUserIconUrl.src,
+        iconSize: [40, 75],
+        iconAnchor: [13, 30],
+    }
 });
 
 const Map: FC<MapProps> = (props: MapProps) => {
     console.log("Map render start");
     const [width] = useWindowSize();
+    const originalIcon = new originalIconExtended();
+    const currentUserIcon = new currentUserIconExtended();
 
     return (
         <MapContainer
@@ -41,6 +56,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
                 return (
                     <Marker
                         position={shopPin.position}
+                        icon={originalIcon}
                         key={
                             shopPin.description +
                             shopPin.position[0] +
@@ -58,6 +74,7 @@ const Map: FC<MapProps> = (props: MapProps) => {
                     </Marker>
                 );
             })}
+            <Marker icon={currentUserIcon} position={props.center} key="current-user-position" />
         </MapContainer>
     );
 };
