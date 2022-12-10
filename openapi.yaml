@@ -52,7 +52,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: '#components/schemas/RestaurantDetail'
+                $ref: '#/components/schemas/RestaurantDetail'
         '500':
           description: Internal server error
 components:
