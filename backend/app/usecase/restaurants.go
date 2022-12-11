@@ -29,7 +29,14 @@ type restaurantsUsecase struct {
 
 // GetAvailableRestaurants implements Restaurants
 func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, now time.Time) ([]model.Restaurant, error) {
-	restaurants, err := r.restaurantRepository.GetNearbyRestaurants(location)
+	diff := func(dur time.Duration) time.Duration {
+		if dur < 0 {
+			return -dur
+		} else {
+			return dur
+		}
+	}(time.Time.Sub(now, time.Now()))
+	restaurants, err := r.restaurantRepository.GetNearbyRestaurants(location, now, diff < time.Minute*10)
 	var returnRestaurants []model.Restaurant
 	if err != nil {
 		return nil, errors.Wrap(err, "error while getting nearby restaurants")
@@ -62,21 +69,24 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 		result := <-c
 		if result.error != nil {
 			// log したい
+			fmt.Printf("%v\n", result.error)
 			continue
 		} else {
 			v.CloseTime = result.Time
 			duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
 			if err != nil {
-				// log したい
+				fmt.Printf("%v\n", result.error)
 				continue
 			}
 			//徒歩で時速4kmとして直線距離で計算した到着時刻+30分後に着かない場合弾く
 			arrivalTime := now.Add(duration + 30*time.Minute)
+			fmt.Printf("arrival: %v close: %v\n", arrivalTime, v.CloseTime)
 			if arrivalTime.Before(v.CloseTime) {
 				returnRestaurants = append(returnRestaurants, v)
 			}
 		}
 	}
+	fmt.Printf("usecase: %v\n", returnRestaurants)
 	return returnRestaurants, nil
 }
 

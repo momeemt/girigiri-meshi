@@ -36,18 +36,18 @@ func (m *MockRestaurant) EXPECT() *MockRestaurantMockRecorder {
 }
 
 // GetNearbyRestaurants mocks base method.
-func (m *MockRestaurant) GetNearbyRestaurants(arg0 model.Location) ([]model.Restaurant, error) {
+func (m *MockRestaurant) GetNearbyRestaurants(arg0 model.Location, arg1 time.Time, arg2 bool) ([]model.Restaurant, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetNearbyRestaurants", arg0)
+	ret := m.ctrl.Call(m, "GetNearbyRestaurants", arg0, arg1, arg2)
 	ret0, _ := ret[0].([]model.Restaurant)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetNearbyRestaurants indicates an expected call of GetNearbyRestaurants.
-func (mr *MockRestaurantMockRecorder) GetNearbyRestaurants(arg0 interface{}) *gomock.Call {
+func (mr *MockRestaurantMockRecorder) GetNearbyRestaurants(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNearbyRestaurants", reflect.TypeOf((*MockRestaurant)(nil).GetNearbyRestaurants), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNearbyRestaurants", reflect.TypeOf((*MockRestaurant)(nil).GetNearbyRestaurants), arg0, arg1, arg2)
 }
 
 // GetNextCloseTime mocks base method.

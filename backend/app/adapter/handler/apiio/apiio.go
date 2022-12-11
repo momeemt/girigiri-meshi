@@ -82,6 +82,11 @@ type Review struct {
 	Time *time.Time `json:"time,omitempty"`
 }
 
+// GetRestaurantsParams defines parameters for GetRestaurants.
+type GetRestaurantsParams struct {
+	Time *time.Time `form:"time,omitempty" json:"time,omitempty"`
+}
+
 // GetRestaurantDetailParams defines parameters for GetRestaurantDetail.
 type GetRestaurantDetailParams struct {
 	// PlaceId the place id for the restaurant you want the detail of
@@ -165,16 +170,16 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// GetRestaurants request with any body
-	GetRestaurantsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRestaurantsWithBody(ctx context.Context, params *GetRestaurantsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	GetRestaurants(ctx context.Context, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRestaurants(ctx context.Context, params *GetRestaurantsParams, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRestaurantDetail request
 	GetRestaurantDetail(ctx context.Context, params *GetRestaurantDetailParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) GetRestaurantsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetRestaurantsRequestWithBody(c.Server, contentType, body)
+func (c *Client) GetRestaurantsWithBody(ctx context.Context, params *GetRestaurantsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRestaurantsRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -185,8 +190,8 @@ func (c *Client) GetRestaurantsWithBody(ctx context.Context, contentType string,
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRestaurants(ctx context.Context, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetRestaurantsRequest(c.Server, body)
+func (c *Client) GetRestaurants(ctx context.Context, params *GetRestaurantsParams, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRestaurantsRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -210,18 +215,18 @@ func (c *Client) GetRestaurantDetail(ctx context.Context, params *GetRestaurantD
 }
 
 // NewGetRestaurantsRequest calls the generic GetRestaurants builder with application/json body
-func NewGetRestaurantsRequest(server string, body GetRestaurantsJSONRequestBody) (*http.Request, error) {
+func NewGetRestaurantsRequest(server string, params *GetRestaurantsParams, body GetRestaurantsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewGetRestaurantsRequestWithBody(server, "application/json", bodyReader)
+	return NewGetRestaurantsRequestWithBody(server, params, "application/json", bodyReader)
 }
 
 // NewGetRestaurantsRequestWithBody generates requests for GetRestaurants with any type of body
-func NewGetRestaurantsRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+func NewGetRestaurantsRequestWithBody(server string, params *GetRestaurantsParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -238,6 +243,26 @@ func NewGetRestaurantsRequestWithBody(server string, contentType string, body io
 	if err != nil {
 		return nil, err
 	}
+
+	queryValues := queryURL.Query()
+
+	if params.Time != nil {
+
+		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "time", runtime.ParamLocationQuery, *params.Time); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	queryURL.RawQuery = queryValues.Encode()
 
 	req, err := http.NewRequest("POST", queryURL.String(), body)
 	if err != nil {
@@ -336,9 +361,9 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// GetRestaurants request with any body
-	GetRestaurantsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error)
+	GetRestaurantsWithBodyWithResponse(ctx context.Context, params *GetRestaurantsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error)
 
-	GetRestaurantsWithResponse(ctx context.Context, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error)
+	GetRestaurantsWithResponse(ctx context.Context, params *GetRestaurantsParams, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error)
 
 	// GetRestaurantDetail request
 	GetRestaurantDetailWithResponse(ctx context.Context, params *GetRestaurantDetailParams, reqEditors ...RequestEditorFn) (*GetRestaurantDetailResponse, error)
@@ -389,16 +414,16 @@ func (r GetRestaurantDetailResponse) StatusCode() int {
 }
 
 // GetRestaurantsWithBodyWithResponse request with arbitrary body returning *GetRestaurantsResponse
-func (c *ClientWithResponses) GetRestaurantsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error) {
-	rsp, err := c.GetRestaurantsWithBody(ctx, contentType, body, reqEditors...)
+func (c *ClientWithResponses) GetRestaurantsWithBodyWithResponse(ctx context.Context, params *GetRestaurantsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error) {
+	rsp, err := c.GetRestaurantsWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetRestaurantsResponse(rsp)
 }
 
-func (c *ClientWithResponses) GetRestaurantsWithResponse(ctx context.Context, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error) {
-	rsp, err := c.GetRestaurants(ctx, body, reqEditors...)
+func (c *ClientWithResponses) GetRestaurantsWithResponse(ctx context.Context, params *GetRestaurantsParams, body GetRestaurantsJSONRequestBody, reqEditors ...RequestEditorFn) (*GetRestaurantsResponse, error) {
+	rsp, err := c.GetRestaurants(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +495,7 @@ func ParseGetRestaurantDetailResponse(rsp *http.Response) (*GetRestaurantDetailR
 type ServerInterface interface {
 	// Search for nearby restaurant
 	// (POST /restaurants)
-	GetRestaurants(ctx echo.Context) error
+	GetRestaurants(ctx echo.Context, params GetRestaurantsParams) error
 	// Details for restaurant
 	// (GET /restaurants/details)
 	GetRestaurantDetail(ctx echo.Context, params GetRestaurantDetailParams) error
@@ -485,8 +510,17 @@ type ServerInterfaceWrapper struct {
 func (w *ServerInterfaceWrapper) GetRestaurants(ctx echo.Context) error {
 	var err error
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetRestaurantsParams
+	// ------------- Optional query parameter "time" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "time", ctx.QueryParams(), &params.Time)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter time: %s", err))
+	}
+
 	// Invoke the callback with all the unmarshalled arguments
-	err = w.Handler.GetRestaurants(ctx)
+	err = w.Handler.GetRestaurants(ctx, params)
 	return err
 }
 
@@ -544,30 +578,30 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"H4sIAAAAAAAC/9RXbW8TRxD+K6trpX4xfkkwQZZQlQRITUkUTCipKoT27sa+Te5uL7t7dgyyxF0KhYaX",
-	"Aqpoq0qoBUEFFahCqC0q8GMWB/Ivqt0z9jm+pIFKlfrFWu3tzjzzzDOz47OGRb2A+uALblTOGtxywMN6",
-	"eZRaWBDqq3XAaABMENBfXCyICG1Qaxu4xUiQHDRe//64++yekTNgFXuBC0ZlvJwv7x+bKJcmckadMg8L",
-	"o2LYNDRdMHKGaAdgVAw/9ExgRidnuNRvbGf76eUttkt7i/nS+NjEWHnfLox3cgaDlZAwsI3KF4Mg0k5P",
-	"9W9RcwksoSDVgAscMuyLUSYsl3JYIJ6GO0CABewRardvjgtG/EYS4YDWDxnUjYrxQWGQhEIvA4U+/Z2c",
-	"4WMvgxC1i2gdCQcQG4BMEWRsfvMUvfnuq42L1zd+/LX77FYWoMChgp5g7qiDefUFhczNoxqIkPlgI+qj",
-	"wsAZH/LmCBHwSqHgOuP5BqUNF0IOzKK+AF/kLeoVAhdbwAuTRw4eXtpbnGJzTbY03Wof9tuhOOOcXJii",
-	"9j6PHTo6N8Enp1ZL4ydLn4wFh3mx6lVXGBNTuFr2Tx89NjVba67Yy21zZXlp/8q0LeZaZNqsz/HG5PIJ",
-	"c7nJy25IZicP8NK+YnFPq1QsFjMjV2iq9mjgCw7hiNiIcGRinkQ9owNC8zoCNDlfHQp92qkegeMLuHbs",
-	"pFn1Jmtn/Fk+PfMZfG61sjwzLNSqcjZVKPmJdxexFkZKU7mUIgfx7azqgyAwcUe1/VYXfJSfScZwW0nv",
-	"7ZntBVKwtXn+cQ/MgcXFxUUjZxABHh8i4H8nn94GVmRskdP7CwOaBFqamD5DO3WJmj6fhSbMqugTzEWC",
-	"6o4R4AaghGZEWz5wxMDFAuz0gTzSpeCFXCATEHgm2DbYiNQRrBIueD4rCJW2mlY4X6ACZ+BI5KwUpM6i",
-	"kQup0ipPTPRdEF9AI3koWmByImDHEGm9TiyC3STWkU6Zgb2TWSma4pH6wKFwKDu9m96sDKD0+XTr+BQL",
-	"Hnoks0ExWicuzG/bocNBsIn5jzjqXUpqc+fmM2ws2UdmW9tTOUnj3JuVBQGrYtSQuu5h4iP1eZiFocjV",
-	"m/T8powevn5xtXv9iYxuyehLeS5+9fxbGa13796X0RUZPZDxXbn2vVx7ItcuyuhR99IVGT2U0ePuy/My",
-	"+mHzzm0Z/SnjdXX9XCSjmzK+LOMbvf3otowvKYNx3H25tnleG9Reuud/kdG9V398vXFpXUbX3vx0WUbX",
-	"5Lk4s9RJVpJbDvjpDLcwRy1GhADViXczDmxp58MS6eVJHVHDSlO39YMpBD3+R9u7skv8Oh2FLONHcu1B",
-	"7ze6v3n/goyuv3nxl4wjGa9v3nnc/W1dxjc2rv6ss3Fv+/OxjC4oBEToXM4QRhqEkVngjtJyExhPXBbz",
-	"pXxRkUgD8HFAjIoxni/mx9UDhYWja2lopFCVRnmGrmZAIIxcwrWofMDMbKfqmaM6ox5KPYaqXPVadWV1",
-	"vTY0uSjqgYsparf1MJe8NLq2g8AliZnCEk+GtaTl7n5sG06uYCHoDR5QnycdZKxYfCe/u3wR+pPgyKug",
-	"IA1Tejy0LOC8HrqoT5a6V06gDR+u+gKYj13EgTWBIWCMJjMJDz0Ps7YyCJhZDqpTNpogJRfc4Erpqc1T",
-	"ykDWyKAANEDzskMie+PLv6R2d4z2fP0XPCauuCbynxlUpcSwBwKY+pjVkPV0ooZaZXH4IURtGqKWWqj9",
-	"hH1E62pKU7dXQmBt4+2/kP6Ys1XduRSd7zn/dLQWehFuDeJQE1hbOOqJwiYNRUYDGIBMsdM51fk7AAD/",
-	"/5S7OLrmDgAA",
+	"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",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

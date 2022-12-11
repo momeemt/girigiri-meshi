@@ -15,6 +15,13 @@ paths:
       summary: Search for nearby restaurant
       description: Get a list of nearby restaurants from location
       operationId: getRestaurants
+      parameters:
+        - name: time
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
       requestBody:
         content:
           application/json:

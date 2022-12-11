@@ -38,36 +38,58 @@ func (g *googlePlacesApi) GetNextCloseTime(restaurant model.Restaurant, now time
 	if err != nil {
 		return time.Time{}, errors.Wrap(err, "error getting response")
 	}
-	for _, v := range response.OpeningHours.Periods {
-		if v.Open.Day == now.Weekday() {
-			closeTime, err := time.Parse("1504", v.Close.Time)
-			if err != nil {
-				return time.Time{}, errors.Wrap(err, "error parsing time string")
-			}
-			closeWeekday := v.Close.Day
-			// 次の closeWeekday 曜日はいつか
-			if dist := closeWeekday - now.Weekday(); dist < 0 {
-				return time.Date(now.Year(), now.Month(), now.Day()+7-int(math.Abs(float64(dist))), closeTime.Hour(), closeTime.Minute(), 0, 0, now.Location()), nil
-			} else {
-				return time.Date(now.Year(), now.Month(), now.Day()+int(dist), closeTime.Hour(), closeTime.Minute(), 0, 0, now.Location()), nil
+	if response.OpeningHours != nil {
+		for _, v := range response.OpeningHours.Periods {
+			if v.Open.Day == now.Weekday() {
+				openTime, err := time.Parse("1504", v.Open.Time)
+				if err != nil {
+					return time.Time{}, errors.Wrap(err, "error parsing time string")
+				}
+				if openTime.After(now) {
+					return time.Time{}, fmt.Errorf("restaurant not open")
+				}
+				closeTime, err := time.Parse("1504", v.Close.Time)
+				if err != nil {
+					return time.Time{}, errors.Wrap(err, "error parsing time string")
+				}
+				closeWeekday := v.Close.Day
+				// 次の closeWeekday 曜日はいつか
+				if dist := closeWeekday - now.Weekday(); dist < 0 {
+					return time.Date(now.Year(), now.Month(), now.Day()+7-int(math.Abs(float64(dist))), closeTime.Hour(), closeTime.Minute(), 0, 0, now.Location()), nil
+				} else {
+					return time.Date(now.Year(), now.Month(), now.Day()+int(dist), closeTime.Hour(), closeTime.Minute(), 0, 0, now.Location()), nil
+				}
 			}
 		}
+	} else {
+		return time.Time{}, fmt.Errorf("no closing time defined")
 	}
-	return time.Time{}, fmt.Errorf("no closing time defined")
+
+	return time.Time{}, fmt.Errorf("unknown error")
 }
 
 // GetNearbyRestaurants implements repository.Restaurant
-func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model.Restaurant, error) {
+func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSearch time.Time, isNow bool) ([]model.Restaurant, error) {
 	client, err := maps.NewClient(maps.WithAPIKey(g.apiKey))
 	if err != nil {
 		return nil, errors.Wrap(err, "error creating new client")
 	}
-	request := &maps.NearbySearchRequest{
-		Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longitude},
-		Language: "ja",
-		OpenNow:  true,
-		RankBy:   maps.RankByDistance,
-		Type:     maps.PlaceTypeRestaurant,
+	var request *maps.NearbySearchRequest
+	if isNow {
+		request = &maps.NearbySearchRequest{
+			Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longitude},
+			Language: "ja",
+			OpenNow:  true,
+			RankBy:   maps.RankByDistance,
+			Type:     maps.PlaceTypeRestaurant,
+		}
+	} else {
+		request = &maps.NearbySearchRequest{
+			Location: &maps.LatLng{Lat: location.Latitude, Lng: location.Longitude},
+			Language: "ja",
+			RankBy:   maps.RankByDistance,
+			Type:     maps.PlaceTypeRestaurant,
+		}
 	}
 	response, err := client.NearbySearch(context.Background(), request)
 	if err != nil {
@@ -84,6 +106,7 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model
 		result := <-c
 		results = append(results, result)
 	}
+	fmt.Printf("%+v\n", results)
 	return results, nil
 }
 
