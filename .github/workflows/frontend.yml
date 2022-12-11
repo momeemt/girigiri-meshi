@@ -1,9 +1,5 @@
 name: Build Frontend
-on:
-  push:
-    branches-ignore:
-      - main
-      - development
+on: push
 
 jobs:
   build:
@@ -19,6 +15,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: yarn
 
       - name: cache-node-modules
         uses: actions/cache@v3
