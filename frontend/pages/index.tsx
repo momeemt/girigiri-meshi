@@ -72,7 +72,7 @@ export default function Home() {
                 </Grid>
             </Grid>
 
-            <div style={{ padding: '0 10%', backgroundColor: '#F6D60F' }}>
+            <div style={{ padding: '50px 10%', backgroundColor: '#F6D60F' }}>
                 <ShopCardList></ShopCardList>
             </div>
             <AllPinMapButton></AllPinMapButton>

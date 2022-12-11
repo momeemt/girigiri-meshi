@@ -32,13 +32,15 @@ const _Loading: NextComponentType<
     Record<string, unknown>
 > = () => {
     return (
-      <Grid container alignItems="center" justifyContent="center" height="100dvh" className="fadeIn">
-          <Grid item>
-              <Grid container justifyContent="center" direction="column" spacing="48">
-                  <Grid item textAlign="center">
-                    <Image src="/logo.png" alt="logo" width={500} height={300} />
+      <Grid container alignItems="center" justifyContent="center" height="100dvh" className="fadeIn" style={{ width: '100%' }}>
+          <Grid item style={{ width: '100%' }}>
+              <Grid container justifyContent="center" alignItems="center" direction="column" spacing="48">
+                  <Grid item style={{ maxWidth: '400px', width: '80%', maxHeight: '400px', height: '60dvw' }}>
+                    <div style={{ position: 'relative', width: '100%', height: '100%', textAlign: 'center' }}>
+                        <Image src="/logo.png" alt="logo" layout="fill" objectFit="contain" />
+                    </div>
                   </Grid>
-                  <Grid item textAlign="center">
+                  <Grid item textAlign="center" style={{ width: '80%' }}>
                       <BorderLinearProgress />
                   </Grid>
               </Grid>
