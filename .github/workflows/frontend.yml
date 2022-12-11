@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    working-directory: ./frontend
     steps:
       - name: checkout
         uses: actions/checkout@v3
