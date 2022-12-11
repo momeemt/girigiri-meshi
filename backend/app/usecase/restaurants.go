@@ -4,6 +4,7 @@ package usecase
 import (
 	"fmt"
 	"math"
+	"sort"
 	"time"
 
 	"github.com/momeemt/2000s/domain/model"
@@ -27,6 +28,11 @@ type restaurantsUsecase struct {
 	restaurantRepository repository.Restaurant
 }
 
+type restaurantWithIndex struct {
+	restaurant model.Restaurant
+	index      int
+}
+
 // GetAvailableRestaurants implements Restaurants
 func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, now time.Time) ([]model.Restaurant, error) {
 	diff := func(dur time.Duration) time.Duration {
@@ -37,33 +43,36 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 		}
 	}(time.Time.Sub(now, time.Now()))
 	restaurants, err := r.restaurantRepository.GetNearbyRestaurants(location, now, diff < time.Minute*10)
-	var returnRestaurants []model.Restaurant
+	var returnRestaurants []restaurantWithIndex
 	if err != nil {
 		return nil, errors.Wrap(err, "error while getting nearby restaurants")
 	}
 	c := make(chan struct {
-		model.Restaurant
+		restaurantWithIndex
 		error
 	})
-	for _, v := range restaurants {
-		go func(restaurant model.Restaurant, c chan struct {
-			model.Restaurant
+	for i, v := range restaurants {
+		go func(restaurant model.Restaurant, index int, c chan struct {
+			restaurantWithIndex
 			error
 		}) {
 			closeTime, err := r.restaurantRepository.GetNextCloseTime(restaurant, now)
 			if err != nil {
 				c <- struct {
-					model.Restaurant
+					restaurantWithIndex
 					error
-				}{model.Restaurant{}, err}
+				}{restaurantWithIndex{}, err}
 			} else {
 				restaurant.CloseTime = closeTime
 				c <- struct {
-					model.Restaurant
+					restaurantWithIndex
 					error
-				}{restaurant, nil}
+				}{restaurantWithIndex{
+					restaurant: restaurant,
+					index:      index,
+				}, nil}
 			}
-		}(v, c)
+		}(v, i, c)
 	}
 
 	for range restaurants {
@@ -73,7 +82,7 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 			fmt.Printf("%v\n", result.error)
 			continue
 		} else {
-			v := result.Restaurant
+			v := result.restaurantWithIndex.restaurant
 			duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
 			if err != nil {
 				fmt.Printf("%v\n", result.error)
@@ -83,12 +92,18 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 			arrivalTime := now.Add(duration + 30*time.Minute)
 			fmt.Printf("arrival: %v close: %v\n", arrivalTime, v.CloseTime)
 			if arrivalTime.Before(v.CloseTime) {
-				returnRestaurants = append(returnRestaurants, v)
+				returnRestaurants = append(returnRestaurants, result.restaurantWithIndex)
 			}
 		}
 	}
+
+	sort.Slice(returnRestaurants, func(i, j int) bool { return returnRestaurants[i].index < returnRestaurants[j].index })
 	fmt.Printf("usecase: %v\n", returnRestaurants)
-	return returnRestaurants, nil
+	var rRestaurants []model.Restaurant
+	for _, v := range returnRestaurants {
+		rRestaurants = append(rRestaurants, v.restaurant)
+	}
+	return rRestaurants, nil
 }
 
 func (r *restaurantsUsecase) GetRestaurantDetail(placeId string) (model.Restaurant, error) {

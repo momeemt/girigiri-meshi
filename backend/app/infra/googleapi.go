@@ -114,8 +114,9 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSe
 		result := <-c
 		resultsNotSorted = append(resultsNotSorted, result)
 	}
-	sort.Slice(resultsNotSorted, func(i, j int) bool { return resultsNotSorted[i].int > resultsNotSorted[j].int })
+	sort.Slice(resultsNotSorted, func(i, j int) bool { return resultsNotSorted[i].int < resultsNotSorted[j].int })
 	for _, v := range resultsNotSorted {
+		fmt.Println(v.int)
 		results = append(results, v.Restaurant)
 	}
 	fmt.Printf("%+v\n", results)
