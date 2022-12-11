@@ -42,37 +42,38 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 		return nil, errors.Wrap(err, "error while getting nearby restaurants")
 	}
 	c := make(chan struct {
-		time.Time
+		model.Restaurant
 		error
 	})
 	for _, v := range restaurants {
 		go func(restaurant model.Restaurant, c chan struct {
-			time.Time
+			model.Restaurant
 			error
 		}) {
 			closeTime, err := r.restaurantRepository.GetNextCloseTime(restaurant, now)
 			if err != nil {
 				c <- struct {
-					time.Time
+					model.Restaurant
 					error
-				}{time.Time{}, err}
+				}{model.Restaurant{}, err}
 			} else {
+				restaurant.CloseTime = closeTime
 				c <- struct {
-					time.Time
+					model.Restaurant
 					error
-				}{closeTime, nil}
+				}{restaurant, nil}
 			}
 		}(v, c)
 	}
 
-	for _, v := range restaurants {
+	for range restaurants {
 		result := <-c
 		if result.error != nil {
 			// log したい
 			fmt.Printf("%v\n", result.error)
 			continue
 		} else {
-			v.CloseTime = result.Time
+			v := result.Restaurant
 			duration, err := time.ParseDuration(fmt.Sprint(distance(location.Latitude, location.Longitude, v.Location.Latitude, v.Location.Longitude)/4) + "h")
 			if err != nil {
 				fmt.Printf("%v\n", result.error)
