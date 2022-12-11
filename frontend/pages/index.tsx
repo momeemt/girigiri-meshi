@@ -63,6 +63,7 @@ export default function Home() {
                     content="ギリギリで駆け込める飯屋を探してギリギリで駆け込もう"
                 />
                 <link rel="icon" href="/favicon.ico" />
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1797424467374703" crossOrigin="anonymous"></script>
             </Head>
             <Grid container alignItems="center" justifyContent="center" className="fadeIn" style={{ width: '100%' }}>
                 <Grid item style={{ maxWidth: '400px', width: '80%', maxHeight: '400px', height: '60dvw' }}>
