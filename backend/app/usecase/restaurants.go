@@ -14,6 +14,7 @@ import (
 type Restaurants interface {
 	// GetAvailableRestaurants は距離と閉店時刻を計算に入れて行くことができる飲食店を近い順番で並べて返す
 	GetAvailableRestaurants(model.Location, time.Time) ([]model.Restaurant, error)
+	GetRestaurantDetail(placeId string) (model.Restaurant, error)
 }
 
 func NewRestuarantsUsecase(restaurantRepository repository.Restaurant) Restaurants {
@@ -70,13 +71,21 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 				continue
 			}
 			//徒歩で時速4kmとして直線距離で計算した到着時刻+30分後に着かない場合弾く
-			arrivalTime := now.Add(duration).Add(30 * time.Minute)
+			arrivalTime := now.Add(duration + 30*time.Minute)
 			if arrivalTime.Before(v.CloseTime) {
 				returnRestaurants = append(returnRestaurants, v)
 			}
 		}
 	}
 	return returnRestaurants, nil
+}
+
+func (r *restaurantsUsecase) GetRestaurantDetail(placeId string) (model.Restaurant, error) {
+	detailedRestaurant, err := r.restaurantRepository.GetRestaurantDetail(placeId)
+	if err != nil {
+		errors.Wrap(err, "error while getting detailed restaurants")
+	}
+	return detailedRestaurant, nil
 }
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

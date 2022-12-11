@@ -87,6 +87,79 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location) ([]model
 	return results, nil
 }
 
+func (g *googlePlacesApi) GetRestaurantDetail(placeId string) (model.Restaurant, error) {
+	client, err := maps.NewClient(maps.WithAPIKey(g.apiKey))
+	if err != nil {
+		return model.Restaurant{}, errors.Wrap(err, "error creating new client")
+	}
+
+	request := &maps.PlaceDetailsRequest{
+		PlaceID:  placeId,
+		Language: "ja",
+	}
+	response, err := client.PlaceDetails(context.Background(), request)
+	if err != nil {
+		return model.Restaurant{}, errors.Wrap(err, "error getting response")
+	}
+	returnRestaurant := model.Restaurant{
+		Name: response.Name,
+		Location: model.Location{
+			Latitude:  response.Geometry.Location.Lat,
+			Longitude: response.Geometry.Location.Lng,
+		},
+		PlaceId: response.PlaceID,
+		Rating:  response.Rating,
+		Reviews: func(r []maps.PlaceReview) []model.Review {
+			var reviews []model.Review
+			for _, v := range r {
+				reviews = append(reviews, model.Review{
+					AuthorName:      v.AuthorName,
+					ProfilePhotoUrl: v.AuthorProfilePhoto,
+					Rating:          v.Rating,
+					Time:            time.Unix(int64(v.Time), 0),
+					Text:            v.Text,
+				})
+			}
+			return reviews
+		}(response.Reviews),
+		Url:              response.URL,
+		UserRatingsTotal: response.UserRatingsTotal,
+		Website:          response.Website,
+	}
+	c := make(chan struct {
+		string
+		error
+	})
+	for _, v := range response.Photos {
+		go func(photoReference string, apiKey string, c chan struct {
+			string
+			error
+		}) {
+			photoUrl, err := getUrl(photoReference, apiKey)
+			if err != nil {
+				c <- struct {
+					string
+					error
+				}{"", err}
+			} else {
+				c <- struct {
+					string
+					error
+				}{photoUrl, nil}
+			}
+		}(v.PhotoReference, g.apiKey, c)
+	}
+	for range response.Photos {
+		result := <-c
+		if result.error != nil {
+			continue
+		} else {
+			returnRestaurant.PhotoUrls = append(returnRestaurant.PhotoUrls, result.string)
+		}
+	}
+	return returnRestaurant, nil
+}
+
 func placesSearchResultToRestaurants(searchResult maps.PlacesSearchResult, apiKey string) model.Restaurant {
 	result := model.Restaurant{
 		Name: searchResult.Name,

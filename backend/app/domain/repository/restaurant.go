@@ -10,4 +10,5 @@ import (
 type Restaurant interface {
 	GetNearbyRestaurants(model.Location) ([]model.Restaurant, error)
 	GetNextCloseTime(model.Restaurant, time.Time) (time.Time, error)
+	GetRestaurantDetail(placeId string) (model.Restaurant, error)
 }
