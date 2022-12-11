@@ -57,7 +57,7 @@ const _ShopCard: NextComponentType<
     const shopCloseTimeText = hour + ":" + minuteStr + "まで";
 
     return (
-        <Card variant="outlined">
+        <Card variant="outlined" style={{ height: '450px', margin: '1rem', borderRadius: '1rem', display: "flex", flexDirection: "column", justifyContent:"space-between" }}>
             <CardMedia
                 component="img"
                 height="200"
@@ -65,10 +65,10 @@ const _ShopCard: NextComponentType<
                 alt={shop.name}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div" fontFamily="Zen Maru Gothic">
                     {shop.name}
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography variant="body1" color="text.secondary" fontFamily="Zen Maru Gothic">
                     {shopCloseTimeText}
                 </Typography>
                 <div style={{ position: "relative", bottom: "-0.5em" }}>

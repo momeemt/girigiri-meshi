@@ -24,7 +24,7 @@ const _CardMapButton: NextComponentType<
         <Grid container justifyContent="center">
             <IconButton style={{ color: "#006699" }} onClick={handleMapOpen}>
                 <FmdGoodIcon />
-                <Typography variant="body1">地図を表示</Typography>
+                <Typography variant="body1"fontFamily="Zen Maru Gothic">地図を表示</Typography>
             </IconButton>
 
             <MapModal
