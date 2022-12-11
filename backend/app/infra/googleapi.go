@@ -104,7 +104,6 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSe
 	var results []model.Restaurant
 	c := make(chan restaurantWithIndex)
 	for i, v := range response.Results {
-		fmt.Println(v.Name)
 		go func(searchResult maps.PlacesSearchResult, index int) {
 			c <- restaurantWithIndex{placesSearchResultToRestaurants(searchResult, g.apiKey), index}
 		}(v, i)
@@ -116,10 +115,8 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSe
 	}
 	sort.Slice(resultsNotSorted, func(i, j int) bool { return resultsNotSorted[i].int < resultsNotSorted[j].int })
 	for _, v := range resultsNotSorted {
-		fmt.Println(v.int)
 		results = append(results, v.Restaurant)
 	}
-	fmt.Printf("%+v\n", results)
 	return results, nil
 }
 

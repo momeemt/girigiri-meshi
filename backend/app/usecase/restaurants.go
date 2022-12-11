@@ -90,7 +90,6 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 			}
 			//徒歩で時速4kmとして直線距離で計算した到着時刻+30分後に着かない場合弾く
 			arrivalTime := now.Add(duration + 30*time.Minute)
-			fmt.Printf("arrival: %v close: %v\n", arrivalTime, v.CloseTime)
 			if arrivalTime.Before(v.CloseTime) {
 				returnRestaurants = append(returnRestaurants, result.restaurantWithIndex)
 			}
@@ -98,7 +97,6 @@ func (r *restaurantsUsecase) GetAvailableRestaurants(location model.Location, no
 	}
 
 	sort.Slice(returnRestaurants, func(i, j int) bool { return returnRestaurants[i].index < returnRestaurants[j].index })
-	fmt.Printf("usecase: %v\n", returnRestaurants)
 	var rRestaurants []model.Restaurant
 	for _, v := range returnRestaurants {
 		rRestaurants = append(rRestaurants, v.restaurant)
