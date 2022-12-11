@@ -8,16 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    working-directory: ./frontend
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        working-directory: ./frontend
 
       - name: setup-node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
+        working-directory: ./frontend
 
       - name: cache-node-modules
         uses: actions/cache@v3
@@ -27,10 +28,13 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        working-directory: ./frontend
 
       - name: Install Dependencies
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install
+        working-directory: ./frontend
 
       - name: Build Application
         run: yarn build
+        working-directory: ./frontend
