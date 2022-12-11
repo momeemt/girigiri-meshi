@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/momeemt/2000s/domain/model"
@@ -68,6 +69,11 @@ func (g *googlePlacesApi) GetNextCloseTime(restaurant model.Restaurant, now time
 	return time.Time{}, fmt.Errorf("unknown error")
 }
 
+type restaurantWithIndex struct {
+	model.Restaurant
+	int
+}
+
 // GetNearbyRestaurants implements repository.Restaurant
 func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSearch time.Time, isNow bool) ([]model.Restaurant, error) {
 	client, err := maps.NewClient(maps.WithAPIKey(g.apiKey))
@@ -96,17 +102,21 @@ func (g *googlePlacesApi) GetNearbyRestaurants(location model.Location, timeToSe
 		return nil, errors.Wrap(err, "error getting response")
 	}
 	var results []model.Restaurant
-	c := make(chan model.Restaurant)
-	for _, v := range response.Results {
-		go func(searchResult maps.PlacesSearchResult) {
-			c <- placesSearchResultToRestaurants(searchResult, g.apiKey)
-		}(v)
+	c := make(chan restaurantWithIndex)
+	for i, v := range response.Results {
+		go func(searchResult maps.PlacesSearchResult, index int) {
+			c <- restaurantWithIndex{placesSearchResultToRestaurants(searchResult, g.apiKey), index}
+		}(v, i)
 	}
+	var resultsNotSorted []restaurantWithIndex
 	for range response.Results {
 		result := <-c
-		results = append(results, result)
+		resultsNotSorted = append(resultsNotSorted, result)
 	}
-	fmt.Printf("%+v\n", results)
+	sort.Slice(resultsNotSorted, func(i, j int) bool { return resultsNotSorted[i].int < resultsNotSorted[j].int })
+	for _, v := range resultsNotSorted {
+		results = append(results, v.Restaurant)
+	}
 	return results, nil
 }
 
