@@ -30,3 +30,11 @@ cd backend
 make build
 make up
 ```
+
+## Awards
+
+![](awards.png)
+
+https://twitter.com/geek_pjt/status/1601870885883109376?s=20&t=cFW1IIEpq0naJqRP7v2Wkg
+
+This application was developed in a hackathon by the Geek Project and won the grand prize.
