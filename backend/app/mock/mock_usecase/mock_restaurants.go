@@ -49,3 +49,18 @@ func (mr *MockRestaurantsMockRecorder) GetAvailableRestaurants(arg0, arg1 interf
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAvailableRestaurants", reflect.TypeOf((*MockRestaurants)(nil).GetAvailableRestaurants), arg0, arg1)
 }
+
+// GetRestaurantDetail mocks base method.
+func (m *MockRestaurants) GetRestaurantDetail(placeId string) (model.Restaurant, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetRestaurantDetail", placeId)
+	ret0, _ := ret[0].(model.Restaurant)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetRestaurantDetail indicates an expected call of GetRestaurantDetail.
+func (mr *MockRestaurantsMockRecorder) GetRestaurantDetail(placeId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRestaurantDetail", reflect.TypeOf((*MockRestaurants)(nil).GetRestaurantDetail), placeId)
+}

@@ -29,7 +29,7 @@ func Test_restaurantsUsecase_GetAvailableRestaurants(t *testing.T) {
 				m.EXPECT().GetNearbyRestaurants(model.Location{
 					Latitude:  35.706028214316625,
 					Longitude: 139.71668341868383,
-				}).Return([]model.Restaurant{
+				}, gomock.Any(), gomock.Any()).Return([]model.Restaurant{
 					{
 						Name: "Saizeriya Nishi-Waseda",
 						Location: model.Location{

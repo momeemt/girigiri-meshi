@@ -15,6 +15,13 @@ paths:
       summary: Search for nearby restaurant
       description: Get a list of nearby restaurants from location
       operationId: getRestaurants
+      parameters:
+        - name: time
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
       requestBody:
         content:
           application/json:
@@ -52,7 +59,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: '#components/schemas/RestaurantDetail'
+                $ref: '#/components/schemas/RestaurantDetail'
         '500':
           description: Internal server error
 components:
@@ -92,10 +99,10 @@ components:
           type: integer
           description: rating by the user
           example: 4
-        relativeTimeDescription:
+        time:
           type: string
+          format: date-time
           description: when the review was written
-          example: 1年前
         text:
           type: string
           description: the main text of the review
@@ -131,8 +138,6 @@ components:
           example: 3.7
     RestaurantDetail:
       type: object
-      required:
-        - photoUrls
       properties:
         placeId: 
           type: string
@@ -147,22 +152,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Review'
-        servesBeer:
-          type: boolean
-        servesBreakfast:
-          type: boolean
-        servesBranch:
-          type: boolean
-        servesDinner:
-          type: boolean
-        servesLunch:
-          type: boolean
-        servesVegetarianFood:
-          type: boolean
-        servesWine:
-          type: boolean
-        takeout:
-          type: boolean
         userRatingsTotal:
           type: integer
           description: number of user userRatingsTotal

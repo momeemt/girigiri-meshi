@@ -34,7 +34,7 @@ func Test_googlePlacesApi_GetNearbyRestaurants(t *testing.T) {
 			g := googlePlacesApi{
 				apiKey: os.Getenv("GOOGLE_PLACES_API_KEY"),
 			}
-			got, err := g.GetNearbyRestaurants(tt.location)
+			got, err := g.GetNearbyRestaurants(tt.location, time.Now(), true)
 			fmt.Printf("%+v\n", got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("googlePlacesApi.GetNearbyRestaurants() error = %v, wantErr %v", err, tt.wantErr)

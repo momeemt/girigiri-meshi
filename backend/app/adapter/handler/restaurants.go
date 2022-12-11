@@ -22,6 +22,18 @@ func NewRestaurantsHandler(restaurantsUsecase usecase.Restaurants) Restaurants {
 }
 
 func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http.Request) {
+	var searchTime time.Time
+	var err error
+	searchTimeText, ok := r.URL.Query()["time"]
+	if !ok {
+		searchTime = time.Now()
+	} else {
+		searchTime, err = time.Parse(time.RFC3339, searchTimeText[0])
+		if err != nil {
+			ReturnErr(err, w)
+			return
+		}
+	}
 	defer r.Body.Close()
 	var locationApiio apiio.Location
 	body, err := io.ReadAll(r.Body)
@@ -35,7 +47,7 @@ func (restaurants *Restaurants) HandleRestaurants(w http.ResponseWriter, r *http
 		model.Location{
 			Latitude:  locationApiio.Latitude,
 			Longitude: locationApiio.Longitude,
-		}, time.Now())
+		}, searchTime)
 	if err != nil {
 		ReturnErr(err, w)
 		return
